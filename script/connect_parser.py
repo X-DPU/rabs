@@ -24,6 +24,8 @@ graph.attr(splines="polyline")
 graph.attr(compound="true")
 graph.attr(overlap='false')
 
+graph.attr(layout='dot')
+graph.attr(newrank ='true')
 
 # c = copy.deepcopy(a)
 
