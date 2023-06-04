@@ -1,0 +1,1 @@
+CPP_FLAGS += -I $(XILINX_HLS)/include
