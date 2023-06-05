@@ -7,8 +7,39 @@ endif
 
 
 
+############################## Help Section ##############################
+.PHONY: help
+
+help::
+	$(ECHO) "Makefile Usage:"
+	$(ECHO) "  make app=<app name> all TARGET=<sw_emu/hw_emu/hw>"
 
 
+.PHONY: info
+info: subl_project
+	mkdir -p $(BUILD_DIR)
+	mkdir -p $(BUILD_DIR)/git
+	mkdir -p $(BUILD_DIR)/report
+	@echo  $(BINARY_CONTAINERS)
+	@echo  $(MK_PATH)
+	@echo  "#####################################################################"
+	@echo  -e  ${BLUE}$(APP)${NC}
+	@echo  "cfg file:"
+	@echo  -e  ${RED}$(CFG_FILE)${NC}
+	@echo  "kernels:"
+	@echo  -e  ${RED}$(KERNEL_OBJS)${NC}
+	@echo  "host objects:"
+	@echo  -e  ${RED}$(HOST_OBJS)${NC}
+	@echo  "global vpp flags:"
+	@echo  -e  ${RED}$(VPP_FLAGS)${NC}
+	@echo  "global cpp flags:"
+	@echo  -e  ${RED}$(CPP_FLAGS)${NC}
+	@echo  "#####################################################################"
+	git status > ${BUILD_DIR}/git/git_status.log
+	git diff > ${BUILD_DIR}/git/code_diff.diff
+	git diff --cached > ${BUILD_DIR}/git/code_cached.diff
+	git log --graph  -10 > ${BUILD_DIR}/git/git_log.log
+	git show HEAD > ${BUILD_DIR}/git/git_show.diff
 
 
 .PHONY: emconfig connect_info post_compile
@@ -44,13 +75,6 @@ all:
 	$(MAKE) post_compile
 
 
-host:  info  $(EXECUTABLE)
-	$(MAKE) post_compile
-
-cleanhost: info
-	$(MAKE) cleanobj
-	$(MAKE) $(EXECUTABLE)
-	${ECHO} "build a clean host"
 
 
 ############################## Cleaning Rules ##############################
@@ -77,7 +101,7 @@ cleanfpga:
 
 cleanobj:
 	-$(RMDIR) $(EXECUTABLE)
-	-$(RMDIR) $(ALL_OBJECTS)
+	-$(RMDIR) $(HOST_OBJS)
 
 
 
@@ -103,3 +127,18 @@ hostemu: cleanhost prog
 .PHONY: automation
 automation:
 	$(shell ./src/automation.sh > generator.log)
+
+
+.PHONY: reset
+reset:
+	(sleep  1 &&  echo -e -n "y\n\n") | xbutil reset
+	echo "done"
+
+PROJECT_FILE=${APP}.sublime-project
+
+
+
+.PHONY: subl_project
+subl_project:
+	@echo ${PROJECT_OBJS}
+	./mk/script/create_subl_project.sh ${APP} ${PROJECT_OBJS}

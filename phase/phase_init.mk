@@ -1,40 +1,10 @@
-############################## Help Section ##############################
-.PHONY: help
-
-help::
-	$(ECHO) "Makefile Usage:"
-	$(ECHO) "  make app=<app name> all TARGET=<sw_emu/hw_emu/hw>"
 
 
 include mk/misc/color.mk
 
 
 
-.PHONY: info
-info:
-	mkdir -p $(BUILD_DIR)
-	mkdir -p $(BUILD_DIR)/git
-	mkdir -p $(BUILD_DIR)/report
-	@echo  $(BINARY_CONTAINERS)
-	@echo  $(MK_PATH)
-	@echo  "#####################################################################"
-	@echo  -e  ${BLUE}$(APP)${NC}
-	@echo  "cfg file:"
-	@echo  -e  ${RED}$(CFG_FILE)${NC}
-	@echo  "kernels:"
-	@echo  -e  ${RED}$(KERNEL_OBJS)${NC}
-	@echo  "host objects:"
-	@echo  -e  ${RED}$(ALL_OBJECTS)${NC}
-	@echo  "global vpp flags:"
-	@echo  -e  ${RED}$(VPP_FLAGS)${NC}
-	@echo  "global cpp flags:"
-	@echo  -e  ${RED}$(CPP_FLAGS)${NC}
-	@echo  "#####################################################################"
-	git status > ${BUILD_DIR}/git/git_status.log
-	git diff > ${BUILD_DIR}/git/code_diff.diff
-	git diff --cached > ${BUILD_DIR}/git/code_cached.diff
-	git log --graph  -10 > ${BUILD_DIR}/git/git_log.log
-	git show HEAD > ${BUILD_DIR}/git/git_show.diff
+
 
 ############################## Setting up Project Variables ##############################
 # Points to top directory of Git repository
@@ -56,13 +26,6 @@ VPP := v++
 
 
 
-
-
-BINARY_CONTAINER_OBJS :=
-AIE_CONTAINER_OBJS :=
-ALL_OBJECTS :=
-KERNEL_OBJS :=
-
 CPP_FLAGS :=
 CPP_LDFLAGS  :=
 
@@ -71,6 +34,15 @@ VPP_LDFLAGS :=
 
 AIE_FLAGS :=
 AIE_LDFLAGS  :=
+
+
+BINARY_CONTAINER_OBJS :=
+AIE_CONTAINER_OBJS :=
+HOST_OBJS :=
+
+KERNEL_OBJS :=
+
+PROJECT_OBJS := mk
 
 
 POST_COMPILE_SCRIPT = post_compile.sh

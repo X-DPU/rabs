@@ -13,6 +13,8 @@ VPP_FLAGS +=  -I $(UPPER_DIR)/$(APP_DIR)
 SET_RTL_APP_DIR = $(eval COMPILE_APP_DIR=$(dir $<))
 SET_RTL_KERNEL_NAME = $(eval KERNEL_NAME=$(patsubst $(dir $<)%.xo,%, $<))
 
+PROJECT_OBJS += $(UPPER_DIR)/$(APP_DIR)
+
 
 
 $(TEMP_DIR)/$(UPPER_DIR)/$(APP_DIR)/%.xo: $(UPPER_DIR)/$(APP_DIR)/%.xo
@@ -20,7 +22,6 @@ $(TEMP_DIR)/$(UPPER_DIR)/$(APP_DIR)/%.xo: $(UPPER_DIR)/$(APP_DIR)/%.xo
 	$(SET_RTL_KERNEL_NAME)
 	@echo  -e  ${BLUE} RTL $(KERNEL_NAME) in $(COMPILE_APP_DIR)${NC}
 	mkdir -p $(TEMP_DIR)/$(COMPILE_APP_DIR)
-
 	cp $< $@
 
 

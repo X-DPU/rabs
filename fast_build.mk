@@ -10,7 +10,7 @@ OBJS := $(patsubst %.c,%.o,$(wildcard *.c))
 OBJS += $(patsubst %.cpp,%.o,$(wildcard *.cpp))
 
 
-ALL_OBJECTS:=$(addprefix $(BASE_PATH_TMP)/,$(OBJS))
+HOST_OBJS:=$(addprefix $(BASE_PATH_TMP)/,$(OBJS))
 
 
 include ../../mk/base/fast_build_common.mk
@@ -40,9 +40,9 @@ $(BASE_PATH_TMP)/%.o: %.c
 	@echo $(GLOBAL_HEADER)"build for c "$<
 	@$(CXX)  $(CFLAGS)   -o $@  -c $<
 	@$(CXX) $(CFLAGS)   -MM -MF  $(patsubst %.o,%.d,$@) $< 
-$(BASE_PATH)/$(NAME): prepare $(ALL_OBJECTS) 
+$(BASE_PATH)/$(NAME): prepare $(HOST_OBJS)
 	@echo $(GLOBAL_HEADER)"start link files"
-	@$(CXX)   $(CFLAGS) $(CPPFLAGS) $(ALL_OBJECTS) -Xlinker -o$@ $(CPP_LDFLAGS) $(LIBS)
+	@$(CXX)   $(CFLAGS) $(CPPFLAGS) $(HOST_OBJS) -Xlinker -o$@ $(CPP_LDFLAGS) $(LIBS)
 	@cp  $(BASE_PATH)/$(NAME) $(NAME)
 	@echo $(GLOBAL_HEADER)"build done"
 clean:

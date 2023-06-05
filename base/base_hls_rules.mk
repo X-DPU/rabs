@@ -11,6 +11,9 @@ KERNEL_OBJS += $(APP_OBJS)
 
 VPP_FLAGS +=  -I $(UPPER_DIR)/$(APP_DIR)
 
+PROJECT_OBJS += $(UPPER_DIR)/$(APP_DIR)
+
+
 SET_APP_DIR = $(eval COMPILE_APP_DIR=$(dir $<))
 SET_KERNEL_NAME = $(eval KERNEL_NAME=$(patsubst $(dir $<)%.cpp,%, $<))
 SET_LOCAL_CONFIG_FILE = $(eval LOCAL_CONFIG_FILE=$(patsubst %.cpp,%.ini, $<))
