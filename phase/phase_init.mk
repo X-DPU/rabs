@@ -55,7 +55,7 @@ SYSROOT :=
 EMCONFIG_DIR = $(TEMP_DIR)
 BINARY_CONTAINERS += $(BUILD_DIR)/kernel.xclbin
 
-PACKAGE_OUT = ./package_$(APP).$(TARGET)
+PACKAGE_OUT = $(TEMP_DIR)/package_$(APP).$(TARGET)
 
 #TARGET :=
 

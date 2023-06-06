@@ -94,6 +94,8 @@ cleanall: clean
 	-$(RMDIR) package*
 	-$(RMDIR) _x* *xclbin.run_summary qemu-memory-_* emulation _vimage pl* start_simulation.sh *.xclbin
 	-$(RMDIR) fast_build
+	-$(RMDIR) *.sublime-project
+	-$(RMDIR) *.sublime-workspace
 cleanfpga:
 	-$(RMDIR) build_dir*
 
