@@ -12,7 +12,6 @@ DEFAULT_CFG  = app/$(APP)/kernel.cfg
 
 PROJECT_OBJS +=  app/$(APP)
 
-include src/data_struct/Makefile
 include app/$(APP)/kernel.mk
 
 

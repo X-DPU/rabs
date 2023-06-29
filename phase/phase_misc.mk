@@ -144,3 +144,4 @@ PROJECT_FILE=${APP}.sublime-project
 subl_project:
 	@echo ${PROJECT_OBJS}
 	./mk/script/create_subl_project.sh ${APP} ${PROJECT_OBJS}
+	subl ${APP}.sublime-project

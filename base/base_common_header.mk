@@ -1,6 +1,9 @@
 
 APP_DIR = $(subdir)
 
+PROJECT_OBJS += $(UPPER_DIR)/$(APP_DIR)
+
+
 
 VPP_FLAGS +=  -I $(UPPER_DIR)/$(APP_DIR)
 CPP_FLAGS +=  -I $(UPPER_DIR)/$(APP_DIR)
