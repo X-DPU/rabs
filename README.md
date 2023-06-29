@@ -11,6 +11,7 @@
 sudo apt install graphviz
 sudo apt install libgraphviz-dev
 pip install graphviz
+pip install numpy
 ```
 
 #### 2. install faketime (Xilinx timestamp 2022 overflow bug)

@@ -79,7 +79,7 @@ all:
 
 ############################## Cleaning Rules ##############################
 
-.PHONY: clean cleanall cleanfpga cleanhost
+.PHONY: clean cleanall cleanfpga rebuild_host
 
 clean:
 	-$(RMDIR) $(EXECUTABLE) $(XCLBIN)/{*sw_emu*,*hw_emu*}
@@ -107,22 +107,11 @@ cleanobj:
 
 
 
-ifeq (hostemu,$(firstword $(MAKECMDGOALS)))
-# use the rest as arguments for "run"
-RUN_ARGS := $(wordlist 2,$(words $(MAKECMDGOALS)),$(MAKECMDGOALS))
-# ...and turn them into do-nothing targets
-$(eval $(RUN_ARGS):;@:)
-endif
-
-
-prog: # ...
-    # ...
-
 .PHONY: hostemu
-hostemu: cleanhost prog
+hostemu: rebuild_host
 	${ECHO} args: $(RUN_ARGS)
 	kill $(shell pidof xsim) | true
-	XCL_EMULATION_MODE=hw_emu  catchsegv ./$(EXECUTABLE)  -fpga ${BUILD_DIR}/kernel.xclbin -qsize 512 $(RUN_ARGS)
+	XCL_EMULATION_MODE=hw_emu  catchsegv ./$(EXECUTABLE) $(EMU_ARGS)
 
 
 
