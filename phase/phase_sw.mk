@@ -22,11 +22,11 @@ CPP_LDFLAGS += $(opencl_LDFLAGS)
 
 ############################## Setting Rules for Host (Building Host Executable) ##############################
 $(EXECUTABLE):  check-xrt | $(HOST_OBJS)
-	@${ECHO} ${LIGHT_BLUE}"Start linking files"${NC}
+	@${ECHO} ${LIGHT_BLUE}"Host start linking files"${NC}
 	@${ECHO} $(CPP_LDFLAGS)
 	@$(CXX)   $(CPP_FLAGS) $(CPP_LDFLAGS) $(HOST_OBJS) -Xlinker -o$@ $(CPP_LDFLAGS) $(LIBS)
 	@cp $(EXECUTABLE)  ${BUILD_DIR}/$(EXECUTABLE)
-	@${ECHO}  ${LIGHT_BLUE}"Build done"${NC}
+	@${ECHO}  ${LIGHT_BLUE}"Host build done"${NC}
 
 
 host:  info  $(EXECUTABLE)

@@ -16,7 +16,7 @@ help::
 
 
 .PHONY: info
-info: subl_project
+info: subl_gen
 	mkdir -p $(BUILD_DIR)
 	mkdir -p $(BUILD_DIR)/git
 	mkdir -p $(BUILD_DIR)/report
@@ -128,9 +128,12 @@ reset:
 PROJECT_FILE=${APP}.sublime-project
 
 
-
-.PHONY: subl_project
-subl_project:
+.PHONY: subl_gen
+subl_gen:
 	@echo ${PROJECT_OBJS}
 	./mk/script/create_subl_project.sh ${APP} ${PROJECT_OBJS}
+
+
+.PHONY: subl_project
+subl_project: subl_gen
 	subl ${APP}.sublime-project
