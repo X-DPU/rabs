@@ -21,6 +21,8 @@ ECHO = echo -e
 RM = rm -f
 RMDIR = rm -rf
 
+EDITOR =subl
+
 
 VPP := v++
 
@@ -29,7 +31,6 @@ VPP := v++
 CPP_FLAGS :=
 CPP_LDFLAGS  :=
 
-VPP_FLAGS :=
 VPP_LDFLAGS :=
 
 AIE_FLAGS :=
@@ -52,10 +53,7 @@ HOST_ARCH := x86
 SYSROOT :=
 
 
-EMCONFIG_DIR = $(TEMP_DIR)
-BINARY_CONTAINERS += $(BUILD_DIR)/kernel.xclbin
 
-PACKAGE_OUT = $(TEMP_DIR)/package_$(APP).$(TARGET)
 
 #TARGET :=
 

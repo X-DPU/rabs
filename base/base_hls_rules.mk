@@ -36,10 +36,16 @@ $(TEMP_DIR)/$(UPPER_DIR)/$(APP_DIR)/%.xo: $(UPPER_DIR)/$(APP_DIR)/%.cpp
 	mkdir -p $(TEMP_DIR)/$(COMPILE_APP_DIR)
 
 	@[ -e ${LOCAL_CONFIG_FILE} ] && { \
-		faketime '2021-01-01 00:00:00' $(VPP) --config ${LOCAL_CONFIG_FILE} $(VPP_FLAGS) -c -k $(KERNEL_NAME) --temp_dir $(TEMP_DIR)/$(COMPILE_APP_DIR)  -I '$(<D)' -o'$@' '$<' ;\
+		faketime '2021-01-01 00:00:00' $(VPP) --config ${LOCAL_CONFIG_FILE} $(VPP_FLAGS)  -c -k $(KERNEL_NAME) --temp_dir $(TEMP_DIR)/$(COMPILE_APP_DIR)  -I '$(<D)' -o'$@' '$<' ;\
 	} || { \
 		faketime '2021-01-01 00:00:00' $(VPP) $(VPP_FLAGS) -c -k $(KERNEL_NAME) --temp_dir $(TEMP_DIR)/$(COMPILE_APP_DIR)  -I '$(<D)' -o'$@' '$<' ;\
 	}
+	echo "$(COMPILE_APP_DIR)$(KERNEL_NAME)" > $(BUILD_DIR)/log_path/$(KERNEL_NAME)
+
+%.log: $(UPPER_DIR)/$(APP_DIR)/%.cpp
+	$(SET_KERNEL_NAME)
+	${EDITOR} $(TEMP_DIR)/$(shell cat $(BUILD_DIR)/log_path/${KERNEL_NAME})/${KERNEL_NAME}/vitis_hls.log
+
 
 
 

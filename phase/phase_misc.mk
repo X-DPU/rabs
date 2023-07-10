@@ -18,6 +18,7 @@ help::
 .PHONY: info
 info: subl_gen
 	mkdir -p $(BUILD_DIR)
+	mkdir -p $(BUILD_DIR)/log_path
 	mkdir -p $(BUILD_DIR)/git
 	mkdir -p $(BUILD_DIR)/report
 	@echo  $(BINARY_CONTAINERS)
