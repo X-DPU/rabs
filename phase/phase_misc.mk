@@ -98,7 +98,7 @@ cleanall: clean
 	-$(RMDIR) *.sublime-project
 	-$(RMDIR) *.sublime-workspace
 cleanfpga:
-	-$(RMDIR) build_dir*
+	-$(RMDIR) $(BUILD_DIR)
 
 
 
