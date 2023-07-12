@@ -19,7 +19,17 @@ pip install numpy
 ```
 sudo apt install faketime
 ```
+#### 3. install opencl headers:
 
+```
+sudo apt install opencl-headers
+```
+
+#### 4. install vitis dependencies:
+
+```
+sudo ${install_path}/Vitis/${version}/scripts/installLibs.sh
+```
 
 ## Notes
 
