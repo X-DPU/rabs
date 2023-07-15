@@ -16,6 +16,10 @@ $(BUILD_DIR)/kernel.xsa: $(BINARY_CONTAINER_OBJS) $(AIE_CONTAINER_OBJS)
 	v++ -l $(XOCCLFLAGS) --config xclbin_overlay.cfg -o $@ $^
 
 
+.PHONY: xo
+xo: $(BINARY_CONTAINER_OBJS)
+	@echo "build all xo:" $(BINARY_CONTAINER_OBJS)
+
 
 ############################## Setting Rules for Binary Containers (Building Kernels) ##############################
 $(BUILD_DIR)/kernel.xclbin:  $(BINARY_CONTAINER_OBJS) $(AIE_CONTAINER_OBJS)
