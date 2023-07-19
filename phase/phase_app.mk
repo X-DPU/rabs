@@ -12,7 +12,7 @@ EXECUTABLE := $(APP).app
 BUILD_DIR := ./build_dir_$(APP)
 TEMP_DIR := ./_x_$(APP)
 
-DEFAULT_CFG  = ${APP_PATH}/$(APP)/kernel.cfg
+DEFAULT_CFG  := ${APP_PATH}/$(APP)/kernel.cfg
 
 PROJECT_OBJS +=  ${APP_PATH}/$(APP)
 
@@ -26,5 +26,3 @@ EMCONFIG_DIR = $(TEMP_DIR)
 PACKAGE_OUT = $(TEMP_DIR)/package_$(APP).$(TARGET)
 
 include ${APP_PATH}/$(APP)/kernel.mk
-
-CFG_FILE ?= ${APP_PATH}/$(APP)/kernel.cfg

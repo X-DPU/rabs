@@ -10,7 +10,7 @@ VPP_FLAGS += --remote_ip_cache  ./.rabs_ipcache
 
 # Kernel linker flags
 VPP_LDFLAGS += --kernel_frequency $(FREQ)
-VPP_LDFLAGS += --vivado.param general.maxThreads=32  --vivado.impl.jobs 32 --config $(CFG_FILE)
+VPP_LDFLAGS += --vivado.param general.maxThreads=32  --vivado.impl.jobs 32 --config ${DEFAULT_CFG}
 
 $(BUILD_DIR)/kernel.xsa: $(BINARY_CONTAINER_OBJS) $(AIE_CONTAINER_OBJS)
 	v++ -l $(XOCCLFLAGS) --config xclbin_overlay.cfg -o $@ $^

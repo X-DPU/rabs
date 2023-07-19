@@ -26,7 +26,7 @@ info: subl_gen
 	@echo  "#####################################################################"
 	@echo  -e  ${BLUE}$(APP)${NC}
 	@echo  "cfg file:"
-	@echo  -e  ${RED}$(CFG_FILE)${NC}
+	@echo  -e  ${RED}$(DEFAULT_CFG)${NC}
 	@echo  "kernels:"
 	@echo  -e  ${RED}$(KERNEL_OBJS)${NC}
 	@echo  "host objects:"
