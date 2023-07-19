@@ -1,4 +1,8 @@
-APP :=  $(basename $(app:app/%=%))
+
+
+
+
+APP :=  $(basename $(build_app:${APP_PATH}/%=%))
 APP :=  $(basename $(APP:%/=%))
 
 
@@ -8,9 +12,9 @@ EXECUTABLE := $(APP).app
 BUILD_DIR := ./build_dir_$(APP)
 TEMP_DIR := ./_x_$(APP)
 
-DEFAULT_CFG  = app/$(APP)/kernel.cfg
+DEFAULT_CFG  = ${APP_PATH}/$(APP)/kernel.cfg
 
-PROJECT_OBJS +=  app/$(APP)
+PROJECT_OBJS +=  ${APP_PATH}/$(APP)
 
 
 VPP_FLAGS := --log_dir ${BUILD_DIR}
@@ -21,6 +25,6 @@ BINARY_CONTAINERS = $(BUILD_DIR)/kernel.xclbin
 EMCONFIG_DIR = $(TEMP_DIR)
 PACKAGE_OUT = $(TEMP_DIR)/package_$(APP).$(TARGET)
 
-include app/$(APP)/kernel.mk
+include ${APP_PATH}/$(APP)/kernel.mk
 
-CFG_FILE ?= app/$(APP)/kernel.cfg
+CFG_FILE ?= ${APP_PATH}/$(APP)/kernel.cfg

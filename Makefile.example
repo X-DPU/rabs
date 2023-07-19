@@ -3,8 +3,13 @@
 include mk/phase/phase_init.mk
 
 
-app ?= example
-
+ifndef app
+build_app=${test}
+APP_PATH?=app/test
+else
+build_app=${app}
+APP_PATH?=app
+endif
 
 
 include mk/phase/phase_app.mk
