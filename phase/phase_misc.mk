@@ -58,6 +58,18 @@ connect_info: ${DEFAULT_CFG}
 	./mk/script/connect_parser.py  ${DEFAULT_CFG}
 	cp -f ${DEFAULT_CFG}.json.pdf /data/connect_info/$(APP)_kernel.pdf | true
 
+project_log: $(BUILD_DIR)/kernel.xclbin
+	${EDITOR}  $(TEMP_DIR)/link/vivado/vpl/runme.log
+
+cat_log:
+	${CAT}  $(TEMP_DIR)/link/vivado/vpl/runme.log
+
+report: subl_project
+	${EDITOR} $(BUILD_DIR)/link/imp/impl_1_full_util_routed.rpt
+	${EDITOR} $(BUILD_DIR)/link/imp/impl_1_kernel_util_routed.rpt
+	${EDITOR} $(TEMP_DIR)/link/vivado/vpl/runme.log
+
+
 emconfig:$(EMCONFIG_DIR)/emconfig.json
 $(EMCONFIG_DIR)/emconfig.json:
 	emconfigutil --platform $(DEVICE) --od $(EMCONFIG_DIR)

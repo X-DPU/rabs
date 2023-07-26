@@ -21,8 +21,8 @@ ECHO = echo -e
 RM = rm -f
 RMDIR = rm -rf
 
-EDITOR =subl
-
+EDITOR = subl
+CAT = cat
 
 VPP := v++
 

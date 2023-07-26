@@ -39,8 +39,7 @@ endif
 	cp $(TEMP_DIR)/reports/link/imp/impl_1_kernel_util_routed.rpt  ${BUILD_DIR}/report/  | true
 	cat $(TEMP_DIR)/link/vivado/vpl/runme.log |  grep scaled\ frequency >   ${BUILD_DIR}/clock.log | true
 
-project_log: $(BUILD_DIR)/kernel.xclbin
-	${EDITOR}  $(TEMP_DIR)/link/vivado/vpl/runme.log
+
 
 
 
