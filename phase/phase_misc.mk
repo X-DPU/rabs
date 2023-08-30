@@ -114,6 +114,7 @@ cleanall: clean
 
 cleanfpga:
 	-$(RMDIR) $(BUILD_DIR)
+	-$(RMDIR) $(GENERATED_KERNEL_OBJS)
 
 
 
