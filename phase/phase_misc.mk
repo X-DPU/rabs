@@ -61,6 +61,9 @@ connect_info: ${DEFAULT_CFG}
 project_log: $(BUILD_DIR)/kernel.xclbin
 	${EDITOR}  $(TEMP_DIR)/link/vivado/vpl/runme.log
 
+open_project:
+	vivado $(TEMP_DIR)/link/vivado/vpl/prj/prj.xpr
+
 cat_log:
 	${CAT}  $(TEMP_DIR)/link/vivado/vpl/runme.log
 
