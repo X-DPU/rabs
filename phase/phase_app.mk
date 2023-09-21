@@ -26,3 +26,11 @@ EMCONFIG_DIR = $(TEMP_DIR)
 PACKAGE_OUT = $(TEMP_DIR)/package_$(APP).$(TARGET)
 
 include ${APP_PATH}/$(APP)/kernel.mk
+
+
+ifeq "${TARGET}" "hw_emu"
+
+CPP_FLAGS += -D__EMULATION__
+VPP_FLAGS += -D__EMULATION__
+
+endif
