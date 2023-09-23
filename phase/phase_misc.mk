@@ -16,7 +16,7 @@ help::
 
 
 .PHONY: info
-info: subl_gen
+info: gen_subl_project
 	mkdir -p $(BUILD_DIR)
 	mkdir -p $(BUILD_DIR)/log_path
 	mkdir -p $(BUILD_DIR)/git
@@ -58,13 +58,13 @@ connect_info: ${DEFAULT_CFG}
 	./mk/script/connect_parser.py  ${DEFAULT_CFG}
 	cp -f ${DEFAULT_CFG}.json.pdf /data/connect_info/$(APP)_kernel.pdf | true
 
-project_log: $(BUILD_DIR)/kernel.xclbin
+project_log:
 	${EDITOR}  $(TEMP_DIR)/link/vivado/vpl/runme.log
 
-open_project:
+open_vivado_project:
 	vivado $(TEMP_DIR)/link/vivado/vpl/prj/prj.xpr
 
-cat_log:
+cat_project_log:
 	${CAT}  $(TEMP_DIR)/link/vivado/vpl/runme.log
 
 report: subl_project
@@ -148,12 +148,12 @@ reset:
 PROJECT_FILE=${APP}.sublime-project
 
 
-.PHONY: subl_gen
-subl_gen:
+.PHONY: gen_subl_project
+gen_subl_project:
 	@echo ${PROJECT_OBJS}
 	./mk/script/create_subl_project.sh ${APP} ${PROJECT_OBJS}
 
 
 .PHONY: subl_project
-subl_project: subl_gen
+subl_project: gen_subl_project
 	subl ${APP}.sublime-project
