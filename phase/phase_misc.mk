@@ -115,13 +115,16 @@ cleanall: clean
 	-$(RMDIR) *.app
 	-$(RMDIR) *.protoinst
 
-cleanfpga:
+clean_fpga_obj:
 	-$(RMDIR) $(BUILD_DIR)
 	-$(RMDIR) $(GENERATED_KERNEL_OBJS)
 
+clean_fpga_bit:
+	-$(RMDIR) $(BUILD_DIR)
 
 
-cleanobj:
+
+clean_host_obj:
 	-$(RMDIR) $(EXECUTABLE)
 	-$(RMDIR) $(HOST_OBJS)
 
@@ -131,6 +134,7 @@ cleanobj:
 hostemu: rebuild_host
 	${ECHO} args: $(RUN_ARGS)
 	kill $(shell pidof xsim) | true
+	kill $(shell pidof xsimk) | true
 	XCL_EMULATION_MODE=hw_emu  catchsegv ./$(EXECUTABLE) $(EMU_ARGS)
 
 
