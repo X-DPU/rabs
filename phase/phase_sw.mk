@@ -33,6 +33,6 @@ host:  info  $(EXECUTABLE)
 	$(MAKE) post_compile
 
 rebuild_host: info
-	$(MAKE) cleanobj
+	$(MAKE) clean_host_obj
 	$(MAKE) $(EXECUTABLE)
 	${ECHO} "build a clean host"
