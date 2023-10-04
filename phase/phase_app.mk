@@ -33,6 +33,6 @@ ifeq "${TARGET}" "hw_emu"
 CPP_FLAGS += -D__EMULATION__
 VPP_FLAGS += -D__EMULATION__
 
-VPP_LDFLAGS += --advanced.param compiler.enableIncrHwEmu=true
+#VPP_LDFLAGS += --advanced.param compiler.enableIncrHwEmu=true
 
 endif

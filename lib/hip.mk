@@ -5,3 +5,5 @@ endif
 
 HIPCC=$(HIP_PATH)/bin/hipcc
 CXX=$(HIPCC)
+
+__HIP_SET__ = true

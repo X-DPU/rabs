@@ -33,8 +33,11 @@ $(TEMP_DIR)/$(UPPER_DIR)/$(APP_DIR)/%.o: $(UPPER_DIR)/$(APP_DIR)/%.cpp
 	@${ECHO} "build for cpp "$<
 	mkdir -p $(TEMP_DIR)/$(COMPILE_APP_DIR)
 	@$(CXX) $(CPP_FLAGS)  -o $@  -c $<
+ifeq ($(__HIP_SET__), true)
+	@${ECHO} "Disable dependencies generation for HIP compiler"
+else
 	@$(CXX) $(CPP_FLAGS)  -MM -MF  $(patsubst %.o,%.d,$@) $<
-
+endif
 
 $(TEMP_DIR)/$(UPPER_DIR)/$(APP_DIR)/%.o: $(UPPER_DIR)/$(APP_DIR)/%.c
 	$(SET_APP_DIR)
@@ -42,7 +45,11 @@ $(TEMP_DIR)/$(UPPER_DIR)/$(APP_DIR)/%.o: $(UPPER_DIR)/$(APP_DIR)/%.c
 	@${ECHO} "build for c "$<
 	mkdir -p $(TEMP_DIR)/$(COMPILE_APP_DIR)
 	@$(CXX) $(CPP_FLAGS)  -o $@  -c $<
+ifeq ($(__HIP_SET__), true)
+	@${ECHO} "Disable dependencies generation for HIP compiler"
+else
 	@$(CXX) $(CPP_FLAGS)  -MM -MF  $(patsubst %.o,%.d,$@) $<
+endif
 
 unexport SRC_OBJS
 unexport APP_SRC
