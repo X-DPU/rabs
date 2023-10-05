@@ -86,7 +86,9 @@ $(EMCONFIG_DIR)/emconfig.json:
 all:
 	$(MAKE) info
 	$(MAKE) connect_info
-	$(MAKE) check-devices $(EXECUTABLE) $(BINARY_CONTAINERS)
+	$(MAKE) check-devices
+	$(MAKE) $(EXECUTABLE) -j
+	$(MAKE) $(BINARY_CONTAINERS)
 	$(MAKE) emconfig
 	$(MAKE) post_compile
 
@@ -130,8 +132,8 @@ clean_host_obj:
 
 
 
-.PHONY: hostemu
-hostemu: rebuild_host
+.PHONY: run_hw_emu
+run_hw_emu: rebuild_host
 	${ECHO} args: $(RUN_ARGS)
 	kill $(shell pidof xsim) | true
 	kill $(shell pidof xsimk) | true

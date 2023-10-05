@@ -34,5 +34,5 @@ host:  info  $(EXECUTABLE)
 
 rebuild_host: info
 	$(MAKE) clean_host_obj
-	$(MAKE) $(EXECUTABLE)
+	$(MAKE) $(EXECUTABLE)  -j
 	${ECHO} "build a clean host"
