@@ -1,10 +1,17 @@
 
 
+app_without_suffix=  $(basename $(app:%/=%))
+app_name =  $(notdir ${app_without_suffix})
+FULL_APP_PATH = $(shell ./mk/script/find_app.py --input  ${app_name})
 
 
-APP :=  $(basename $(build_app:${APP_PATH}/%=%))
-APP :=  $(basename $(APP:%/=%))
+APP= $(notdir ${FULL_APP_PATH})
+APP_PATH= $(dir ${FULL_APP_PATH})
 
+
+.PHONY: app_test
+app_test:
+	echo ${FULL_APP_PATH}
 
 FREQ := 300
 

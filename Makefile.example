@@ -2,15 +2,7 @@
 
 include mk/phase/phase_init.mk
 
-
-ifndef app
-build_app=${test}
-APP_PATH?=app/test
-else
-build_app=${app}
-APP_PATH?=app
-endif
-
+app?=hello_world
 
 include mk/phase/phase_app.mk
 
