@@ -117,14 +117,12 @@ cleanall: clean
 	-$(RMDIR) *.app
 	-$(RMDIR) *.protoinst
 
-clean_fpga_obj:
-	-$(RMDIR) $(BUILD_DIR)
+clean_fpga_obj: clean_fpga_bit
 	-$(RMDIR) $(GENERATED_KERNEL_OBJS)
+	-$(RMDIR) .run
 
 clean_fpga_bit:
 	-$(RMDIR) $(BUILD_DIR)
-
-
 
 clean_host_obj:
 	-$(RMDIR) $(EXECUTABLE)
