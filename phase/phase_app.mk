@@ -2,7 +2,7 @@
 
 app_without_suffix=  $(basename $(app:%/=%))
 app_name =  $(notdir ${app_without_suffix})
-FULL_APP_PATH = $(shell ./mk/script/find_app.py --input  ${app_name})
+FULL_APP_PATH := $(shell ./mk/script/find_app.py --input  ${app_name})
 
 
 APP= $(notdir ${FULL_APP_PATH})

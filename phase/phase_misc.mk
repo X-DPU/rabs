@@ -161,3 +161,7 @@ gen_subl_project:
 .PHONY: subl_project
 subl_project: gen_subl_project
 	wmctrl -s 0 && subl ${APP}.sublime-project
+
+.PHONY: display_topo
+display_topo: connect_info
+	nautilus -w  ${FULL_APP_PATH}  &
