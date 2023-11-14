@@ -131,7 +131,9 @@ clean_host_obj:
 
 
 .PHONY: run_hw_emu
-run_hw_emu: rebuild_host
+run_hw_emu:
+	$(MAKE) clean_host_obj
+	$(MAKE) $(EXECUTABLE) TARGET=hw_emu  -j
 	${ECHO} args: $(RUN_ARGS)
 	kill $(shell pidof xsim) | true
 	kill $(shell pidof xsimk) | true
