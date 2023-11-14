@@ -160,4 +160,4 @@ gen_subl_project:
 
 .PHONY: subl_project
 subl_project: gen_subl_project
-	subl ${APP}.sublime-project
+	wmctrl -s 0 && subl ${APP}.sublime-project
