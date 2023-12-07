@@ -36,11 +36,11 @@ info: gen_subl_project
 	@echo  "global cpp flags:"
 	@echo  -e  ${RED}$(CPP_FLAGS)${NC}
 	@echo  "#####################################################################"
-	git status > ${BUILD_DIR}/git/git_status.log
-	git diff > ${BUILD_DIR}/git/code_diff.diff
-	git diff --cached > ${BUILD_DIR}/git/code_cached.diff
-	git log --graph  -10 > ${BUILD_DIR}/git/git_log.log
-	git show HEAD > ${BUILD_DIR}/git/git_show.diff
+	git status > ${BUILD_DIR}/git/git_status.log | true
+	git diff > ${BUILD_DIR}/git/code_diff.diff | true
+	git diff --cached > ${BUILD_DIR}/git/code_cached.diff | true
+	git log --graph  -10 > ${BUILD_DIR}/git/git_log.log | true
+	git show HEAD > ${BUILD_DIR}/git/git_show.diff | true
 
 
 .PHONY: emconfig connect_info post_compile
