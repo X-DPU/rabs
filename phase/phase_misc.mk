@@ -167,3 +167,9 @@ subl_project: gen_subl_project
 .PHONY: display_topo
 display_topo: connect_info
 	nautilus -w  ${FULL_APP_PATH}  &
+
+
+
+.PHONY: bd_topo
+bd_topo:
+	vivado -mode batch -source mk/tcl/save_bd.tcl -tclargs  ${TEMP_DIR}
