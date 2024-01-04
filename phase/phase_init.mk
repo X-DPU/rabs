@@ -29,6 +29,7 @@ VPP := v++
 
 
 CPP_FLAGS :=
+CPP_FLAGS += -g -fsanitize=address
 CPP_LDFLAGS  :=
 
 VPP_LDFLAGS :=
