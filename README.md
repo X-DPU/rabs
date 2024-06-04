@@ -8,8 +8,7 @@
 #### 1. install graphviz
 
 ```bash
-sudo apt install graphviz
-sudo apt install libgraphviz-dev
+sudo apt install -y graphviz libgraphviz-dev python3-pip
 pip install graphviz
 pip install numpy
 ```
@@ -17,15 +16,10 @@ pip install numpy
 #### 2. install faketime (Xilinx timestamp 2022 overflow bug)
 
 ```
-sudo apt install faketime
-```
-#### 3. install opencl headers:
-
-```
-sudo apt install opencl-headers
+sudo apt install -y faketime wmctrl opencl-headers
 ```
 
-#### 4. install vitis dependencies:
+#### 3. install vitis dependencies:
 
 ```
 sudo ${install_path}/Vitis/${version}/scripts/installLibs.sh
