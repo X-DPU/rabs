@@ -16,6 +16,8 @@ __PL_SET__ := false
 __AIE_SET__ := false
 __HOST_SET__ := false
 
+__ADVANCED_HLS__ :=
+
 CP = cp -rf
 ECHO = echo -e
 RM = rm -f

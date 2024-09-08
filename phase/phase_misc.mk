@@ -105,6 +105,7 @@ clean:
 	-$(RMDIR) profile_* TempConfig system_estimate.xtxt *.rpt *.csv
 	-$(RMDIR) src/*.ll *v++* .Xil emconfig.json dltmp* xmltmp* *.log *.jou *.wcfg *.wdb
 	-$(RMDIR) .run
+	-$(RMDIR) proj_*
 
 
 cleanall: clean

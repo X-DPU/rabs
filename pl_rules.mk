@@ -8,7 +8,14 @@ upperdir := $(notdir $(patsubst %/,%,$(dir $(temp_dir))))
 UPPER_DIR := $(upperdir)
 
 
+
+ifdef __ADVANCED_HLS__
+include  mk/base/base_vivado_hls_rules.mk
+else
 include  mk/base/base_hls_rules.mk
+endif
+
+
 include  mk/base/base_rtl_rules.mk
 
 __PL_SET__ = true
