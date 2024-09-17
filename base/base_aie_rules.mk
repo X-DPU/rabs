@@ -7,7 +7,6 @@ APP_DIR = $(subdir)
 
 
 
-
 AIE_CONTAINER_OBJS += $(TEMP_DIR)/$(UPPER_DIR)/$(APP_DIR)/libadf.a
 
 PROJECT_OBJS += $(UPPER_DIR)/$(APP_DIR)
@@ -15,7 +14,7 @@ PROJECT_OBJS += $(UPPER_DIR)/$(APP_DIR)
 
 $(TEMP_DIR)/$(UPPER_DIR)/$(APP_DIR)/libadf.a: $(UPPER_DIR)/$(APP_DIR)/src/*.cpp
 	@${ECHO} $(dir $(patsubst %/,%, $(dir $<)))
-	make -C ./$(dir $(patsubst %/,%, $(dir $<))) -f ../../mk/base/base_aie_rules.mk  aie_compile AIE_FLAGS="${AIE_FLAGS}"
+	make -C ./$(dir $(patsubst %/,%, $(dir $<))) -f ../../mk/base/base_aie_rules.mk  aie_compile AIE_FLAGS="${AIE_FLAGS}" AIE_PLATFORM="${AIE_PLATFORM}"
 	mkdir -p $(TEMP_DIR)/$(dir $(patsubst %/,%, $(dir $<)))
 	@cp  $(dir $(patsubst %/,%, $(dir $<)))/libadf.a  $@
 
@@ -38,7 +37,7 @@ libadf.a: src/*
 	@echo "INFO:Running aiecompiler for hw..."
 	@rm -rf Work libadf.a
 	@mkdir -p Work
-	@aiecompiler --target=hw --platform=/opt/xilinx/platforms/xilinx_vck5000_gen4x8_qdma_2_202220_1/xilinx_vck5000_gen4x8_qdma_2_202220_1.xpfm --include="." --include="src" ${AIE_FLAGS} --workdir=./Work src/graph.cpp
+	@aiecompiler --target=hw --include="." --platform=${AIE_PLATFORM} --include="src" ${AIE_FLAGS} --workdir=./Work src/graph.cpp
 
 aie_compile_x86:
 	@echo "INFO:- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
