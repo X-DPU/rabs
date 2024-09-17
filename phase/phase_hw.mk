@@ -20,6 +20,9 @@ $(BUILD_DIR)/kernel.xsa: $(BINARY_CONTAINER_OBJS) $(AIE_CONTAINER_OBJS)
 xo: $(BINARY_CONTAINER_OBJS)
 	@echo "build all xo:" $(BINARY_CONTAINER_OBJS)
 
+.PHONY: aie_obj
+aie_obj : $(AIE_CONTAINER_OBJS)
+	@echo "build all aie object:" $(AIE_CONTAINER_OBJS)
 
 ############################## Setting Rules for Binary Containers (Building Kernels) ##############################
 $(BUILD_DIR)/kernel.xclbin:  $(BINARY_CONTAINER_OBJS) $(AIE_CONTAINER_OBJS)
