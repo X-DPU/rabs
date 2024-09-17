@@ -1,15 +1,17 @@
-set hls_func [lindex $argv 0]
-set part_name  [lindex $argv 1]
-set design_files  [lindex $argv 2]
+set hls_func     [lindex $argv 0]
+set part_name    [lindex $argv 1]
+set design_files [lindex $argv 2]
 set cflags_file  [lindex $argv 3]
-set output_file [lindex $argv 4]
+set output_file  [lindex $argv 4]
+set build_path   [lindex $argv 5]
+
 
 set fileId [open "${cflags_file}" r]
 set cflags [read $fileId]
 close $fileId
 
 
-open_project proj_${hls_func}
+open_project proj_${hls_func} --reset
 set_top ${hls_func}
 add_files ${design_files} -cflags "${cflags}"
 

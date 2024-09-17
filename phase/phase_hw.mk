@@ -1,6 +1,6 @@
 ############################## Setting up Kernel Variables ##############################
 # Kernel compiler global settings
-VPP_FLAGS += -t $(TARGET) --platform $(DEVICE) --save-temps
+VPP_FLAGS += -t $(TARGET) --platform $(DEVICE) --save-temps --verbose
 ifneq ($(TARGET), hw)
 	VPP_FLAGS += -g
 endif
@@ -9,7 +9,13 @@ VPP_FLAGS += -I ./src/ --vivado.param general.maxThreads=32 --vivado.synth.jobs 
 VPP_FLAGS += --remote_ip_cache  ./.rabs_ipcache
 
 # Kernel linker flags
-VPP_LDFLAGS += --kernel_frequency $(FREQ)
+ifdef __ADVANCED_HLS__
+	# adhoc support for fixed clock
+	# VPP_LDFLAGS += --clock.defaultFreqHz $(FREQ)
+else
+	VPP_LDFLAGS += --kernel_frequency $(FREQ)
+endif
+
 VPP_LDFLAGS += --vivado.param general.maxThreads=32  --vivado.impl.jobs 32 --config ${DEFAULT_CFG}
 
 $(BUILD_DIR)/kernel.xsa: $(BINARY_CONTAINER_OBJS) $(AIE_CONTAINER_OBJS)

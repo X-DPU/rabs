@@ -33,6 +33,8 @@ info: gen_subl_project
 	@echo  -e  ${RED}$(HOST_OBJS)${NC}
 	@echo  "global vpp flags:"
 	@echo  -e  ${RED}$(VPP_FLAGS)${NC}
+	@echo  "global vpp ld flags:"
+	@echo  -e  ${RED}$(VPP_LDFLAGS)${NC}
 	@echo  "global cpp flags:"
 	@echo  -e  ${RED}$(CPP_FLAGS)${NC}
 	@echo  "#####################################################################"
