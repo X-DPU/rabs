@@ -12,9 +12,12 @@ MK_PATH := $(abspath $(lastword $(MAKEFILE_LIST)))
 COMMON_REPO ?= $(shell bash -c 'export MK_PATH=$(MK_PATH); echo  $${MK_PATH%fpga/*}')
 PWD = $(shell readlink -f .)
 
-__PL_SET__ := false
-__AIE_SET__ := false
-__HOST_SET__ := false
+__PL_SET__    := false
+__AIE_SET__   := false
+__HOST_SET__  := false
+__PS_SET__    := false
+
+__PLATFORM_SET__ := false
 
 __ADVANCED_HLS__ :=
 

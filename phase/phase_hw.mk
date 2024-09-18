@@ -18,21 +18,54 @@ endif
 
 VPP_LDFLAGS += --vivado.param general.maxThreads=32  --vivado.impl.jobs 32 --config ${DEFAULT_CFG}
 
-$(BUILD_DIR)/kernel.xsa: $(BINARY_CONTAINER_OBJS) $(AIE_CONTAINER_OBJS)
-	v++ -l $(XOCCLFLAGS) --config xclbin_overlay.cfg -o $@ $^
 
 
 .PHONY: xo
 xo: $(BINARY_CONTAINER_OBJS)
-	@echo "build all xo:" $(BINARY_CONTAINER_OBJS)
+	@${ECHO} "build all xo:" $(BINARY_CONTAINER_OBJS)
 
 .PHONY: aie_obj
-aie_obj : $(AIE_CONTAINER_OBJS)
-	@echo "build all aie object:" $(AIE_CONTAINER_OBJS)
+aie_obj: $(AIE_CONTAINER_OBJS)
+	@${ECHO} "build all aie object:" $(AIE_CONTAINER_OBJS)
+
+.PHONY: aie_xclbin
+aie_xclbin: $(BUILD_DIR)/aie_kernel.xclbin
+	@${ECHO} "build all aie object:" $(AIE_CONTAINER_OBJS)
+
+$(BUILD_DIR)/aie_kernel.xclbin : $(AIE_CONTAINER_OBJS)
+	$(VPP) -s -p -t $(TARGET) -f $(DEVICE) --package.out_dir ./	\
+	       --package.defer_aie_run --config mk/misc/aie_xrt.ini -o $@ $<
+
+.PHONY: aie_xsa
+aie_xsa: $(BUILD_DIR)/kernel.xsa
+
+
+aie_clean: ${AIE_CONTAINER_OBJS}
+	@rm  -rf $(BUILD_DIR)/aie_kernel.xclbin
+	@rm  -rf $(AIE_CONTAINER_OBJS)
+	@${ECHO} $(TEMP_DIR)
+	@${ECHO} $(subst $(TEMP_DIR),., ./$(dir $<))
+	@rm  -rf $(subst $(TEMP_DIR),., ./$(dir $<))/.Xil
+	@rm  -rf $(subst $(TEMP_DIR),., ./$(dir $<))/Work
+	@rm  -rf $(subst $(TEMP_DIR),., ./$(dir $<))/*.log
+	@rm  -rf $(subst $(TEMP_DIR),., ./$(dir $<))/libadf.a
+
+.PHONY: aie_ps
+aie_ps: $(TEMP_DIR)/$(UPPER_DIR)/$(APP_DIR)/ps.app
+
+
+.PHONY: aie_all
+aie_all: 	aie_xclbin aie_ps
+
+
+$(BUILD_DIR)/kernel.xsa: $(BINARY_CONTAINER_OBJS) $(AIE_CONTAINER_OBJS)
+	$(VPP) $(VPP_FLAGS) -l $(VPP_LDFLAGS) --temp_dir $(TEMP_DIR)  -o'$(BUILD_DIR)/kernel.xsa' $(BINARY_CONTAINER_OBJS) $(AIE_CONTAINER_OBJS)
+
+
 
 ############################## Setting Rules for Binary Containers (Building Kernels) ##############################
 $(BUILD_DIR)/kernel.xclbin:  $(BINARY_CONTAINER_OBJS) $(AIE_CONTAINER_OBJS)
-	@echo $(BINARY_CONTAINER_OBJS)
+	@${ECHO} $(BINARY_CONTAINER_OBJS)
 ifeq ($(__AIE_SET__), true)
 	$(VPP) $(VPP_FLAGS) -l $(VPP_LDFLAGS) --temp_dir $(TEMP_DIR)  -o'$(BUILD_DIR)/kernel.xsa' $(BINARY_CONTAINER_OBJS) $(AIE_CONTAINER_OBJS)
 	$(VPP) -p $(BUILD_DIR)/kernel.xsa $(AIE_CONTAINER_OBJS) --temp_dir $(TEMP_DIR)  -t $(TARGET) --platform $(DEVICE) -o $(BUILD_DIR)/kernel.xclbin  --package.out_dir $(PACKAGE_OUT)  --package.boot_mode=ospi

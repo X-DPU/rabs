@@ -12,6 +12,15 @@ AIE_CONTAINER_OBJS += $(TEMP_DIR)/$(UPPER_DIR)/$(APP_DIR)/libadf.a
 PROJECT_OBJS += $(UPPER_DIR)/$(APP_DIR)
 
 
+$(TEMP_DIR)/$(UPPER_DIR)/$(APP_DIR)/ps.app: $(UPPER_DIR)/$(APP_DIR)/src/graph.cpp  $(UPPER_DIR)/$(APP_DIR)/Work/ps/c_rts/aie_control_xrt.cpp
+	@${ECHO} ${RED} "start compile arm program" ${NC}
+	$(ARM_CXX) $(ARM_CPP_FLAGS) $^ $(ARM_LDFLAGS) -o $@
+
+
+$(UPPER_DIR)/$(APP_DIR)/Work/ps/c_rts/aie_control_xrt.cpp:  ${AIE_CONTAINER_OBJS}
+
+
+
 $(TEMP_DIR)/$(UPPER_DIR)/$(APP_DIR)/libadf.a: $(UPPER_DIR)/$(APP_DIR)/src/*.cpp
 	@${ECHO} $(dir $(patsubst %/,%, $(dir $<)))
 	make -C ./$(dir $(patsubst %/,%, $(dir $<))) -f ../../mk/base/base_aie_rules.mk  aie_compile AIE_FLAGS="${AIE_FLAGS}" AIE_PLATFORM="${AIE_PLATFORM}"
@@ -19,10 +28,12 @@ $(TEMP_DIR)/$(UPPER_DIR)/$(APP_DIR)/libadf.a: $(UPPER_DIR)/$(APP_DIR)/src/*.cpp
 	@cp  $(dir $(patsubst %/,%, $(dir $<)))/libadf.a  $@
 
 
+
+
 ## reserved for debug
 #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 #Clean build products
-aie_clean:
+inner_aie_clean:
 	-@rm -rf .Xil .ipcache vivado* *.xpe *.txt *.log
 	-@rm -rf Work libadf.a
 	-@rm -rf x86simulator_output aiesimulator_output xnwOut .AIE_SIM_CMD_LINE_OPTIONS pl_sample_count* *.html ISS_RPC_SERVER_PORT

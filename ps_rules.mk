@@ -8,9 +8,11 @@ upperdir := $(notdir $(patsubst %/,%,$(dir $(temp_dir))))
 UPPER_DIR := $(upperdir)
 
 
-include  mk/base/base_hls_rules.mk
-include  mk/base/base_rtl_rules.mk
+include  mk/base/base_ps_rules.mk
+
+__PS_SET__ = true
 
 unexport subdir
 unexport temp_dir
 unexport upperdir
+unexport UPPER_DIR
