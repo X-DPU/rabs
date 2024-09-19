@@ -6,8 +6,8 @@ XRT_INCLUDE     := $(ARM_SYSROOT)/usr/include/xrt
 AIE_LINKER      := $(ARM_SYSROOT)/lib
 
 
-ARM_CPP_FLAGS  += -I$(XILINX_VITIS)/aietools/include/ -I$(XRT_INCLUDE) -I./ -I./kernels
-ARM_LDDIRS		:= --sysroot=$(ARM_SYSROOT) -L$(XILINX_VITIS)/aietools/lib/aarch64.o -L$(AIE_LINKER)
+ARM_CPP_FLAGS  += -I$(XILINX_VITIS)/aietools/include/ -I$(XRT_INCLUDE) -I./ -I./kernels --sysroot=$(ARM_SYSROOT)
+ARM_LDDIRS		:=  -L$(XILINX_VITIS)/aietools/lib/aarch64.o -L$(AIE_LINKER)
 ARM_LDLIBS		:= -lxaiengine -ladf_api_xrt -lxrt_core -lxrt_coreutil
 ARM_LDFLAGS		:= $(ARM_LDDIRS) $(ARM_LDLIBS)
 

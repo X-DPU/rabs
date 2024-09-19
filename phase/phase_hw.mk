@@ -24,39 +24,6 @@ VPP_LDFLAGS += --vivado.param general.maxThreads=32  --vivado.impl.jobs 32 --con
 xo: $(BINARY_CONTAINER_OBJS)
 	@${ECHO} "build all xo:" $(BINARY_CONTAINER_OBJS)
 
-.PHONY: aie_obj
-aie_obj: $(AIE_CONTAINER_OBJS)
-	@${ECHO} "build all aie object:" $(AIE_CONTAINER_OBJS)
-
-.PHONY: aie_xclbin
-aie_xclbin: $(BUILD_DIR)/aie_kernel.xclbin
-	@${ECHO} "build all aie object:" $(AIE_CONTAINER_OBJS)
-
-$(BUILD_DIR)/aie_kernel.xclbin : $(AIE_CONTAINER_OBJS)
-	$(VPP) -s -p -t $(TARGET) -f $(DEVICE) --package.out_dir ./	\
-	       --package.defer_aie_run --config mk/misc/aie_xrt.ini -o $@ $<
-
-.PHONY: aie_xsa
-aie_xsa: $(BUILD_DIR)/kernel.xsa
-
-
-aie_clean: ${AIE_CONTAINER_OBJS}
-	@rm  -rf $(BUILD_DIR)/aie_kernel.xclbin
-	@rm  -rf $(AIE_CONTAINER_OBJS)
-	@${ECHO} $(TEMP_DIR)
-	@${ECHO} $(subst $(TEMP_DIR),., ./$(dir $<))
-	@rm  -rf $(subst $(TEMP_DIR),., ./$(dir $<))/.Xil
-	@rm  -rf $(subst $(TEMP_DIR),., ./$(dir $<))/Work
-	@rm  -rf $(subst $(TEMP_DIR),., ./$(dir $<))/*.log
-	@rm  -rf $(subst $(TEMP_DIR),., ./$(dir $<))/libadf.a
-
-.PHONY: aie_ps
-aie_ps: $(TEMP_DIR)/$(UPPER_DIR)/$(APP_DIR)/ps.app
-
-
-.PHONY: aie_all
-aie_all: 	aie_xclbin aie_ps
-
 
 $(BUILD_DIR)/kernel.xsa: $(BINARY_CONTAINER_OBJS) $(AIE_CONTAINER_OBJS)
 	$(VPP) $(VPP_FLAGS) -l $(VPP_LDFLAGS) --temp_dir $(TEMP_DIR)  -o'$(BUILD_DIR)/kernel.xsa' $(BINARY_CONTAINER_OBJS) $(AIE_CONTAINER_OBJS)

@@ -34,8 +34,11 @@ VPP := v++
 
 
 CPP_FLAGS :=
-CPP_FLAGS += -g -fsanitize=address
 CPP_LDFLAGS  :=
+CPP_FLAGS += -g -fsanitize=address
+
+ARM_CPP_FLAGS :=
+ARM_LDFLAGS :=
 
 VPP_LDFLAGS :=
 
@@ -46,8 +49,9 @@ AIE_LDFLAGS  :=
 BINARY_CONTAINER_OBJS :=
 AIE_CONTAINER_OBJS :=
 HOST_OBJS :=
+ARM_OBJS :=
 
-
+AIE_PS_APP:=
 KERNEL_OBJS :=
 GENERATED_KERNEL_OBJS :=
 

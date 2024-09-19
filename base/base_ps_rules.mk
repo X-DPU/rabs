@@ -1,55 +1,50 @@
 
 APP_DIR = $(subdir)
 
-CPP_SRCS = $(wildcard $(UPPER_DIR)/$(APP_DIR)/*.cpp)
-CPP_APP_SRC_RMDIR = $(patsubst $(UPPER_DIR)/$(APP_DIR)/%, %,$(CPP_SRCS))
+ARM_CPP_SRCS = $(wildcard $(UPPER_DIR)/$(APP_DIR)/*.cpp)
+ARM_CPP_APP_SRC_RMDIR = $(patsubst $(UPPER_DIR)/$(APP_DIR)/%, %,$(ARM_CPP_SRCS))
 
-SRC_OBJS = $(patsubst %.cpp, %,$(CPP_APP_SRC_RMDIR))
-
-
-C_SRCS = $(wildcard $(UPPER_DIR)/$(APP_DIR)/*.c)
-C_APP_SRC_RMDIR = $(patsubst $(UPPER_DIR)/$(APP_DIR)/%, %,$(C_SRCS))
-
-SRC_OBJS += $(patsubst %.c, %,$(C_APP_SRC_RMDIR))
+ARM_SRC_OBJS = $(patsubst %.cpp, %,$(ARM_CPP_APP_SRC_RMDIR))
 
 
+ARM_C_SRCS = $(wildcard $(UPPER_DIR)/$(APP_DIR)/*.c)
+ARM_C_APP_SRC_RMDIR = $(patsubst $(UPPER_DIR)/$(APP_DIR)/%, %,$(ARM_C_SRCS))
 
-APP_BINARY_CONTAINERS = $(patsubst %, $(TEMP_DIR)/$(UPPER_DIR)/$(APP_DIR)/%.o,$(SRC_OBJS))
+ARM_SRC_OBJS += $(patsubst %.c, %,$(ARM_C_APP_SRC_RMDIR))
 
-HOST_OBJS += $(APP_BINARY_CONTAINERS)
+
+
+ARM_APP_BINARY_CONTAINERS = $(patsubst %, $(TEMP_DIR)/$(UPPER_DIR)/$(APP_DIR)/%.o,$(ARM_SRC_OBJS))
+
+ARM_OBJS += $(ARM_APP_BINARY_CONTAINERS)
 
 PROJECT_OBJS += $(UPPER_DIR)/$(APP_DIR)
 
-CPP_FLAGS +=  -I $(UPPER_DIR)/$(APP_DIR)
+ARM_CPP_FLAGS +=  -I $(UPPER_DIR)/$(APP_DIR)
 
 
 SET_APP_DIR = $(eval COMPILE_APP_DIR=$(dir $<))
 #SET_SRC = $(eval KERNEL_NAME=$(patsubst src/$(COMPILE_APP_DIR)/%.cpp,%, $<))
 
+# $<: Refers to the first prerequisite (the first dependency) of the rule.
+# $^: Refers to all the prerequisites (dependencies) of the rule, with duplicates removed. It’s a list of all files that the target depends on.
+
 $(TEMP_DIR)/$(UPPER_DIR)/$(APP_DIR)/%.o: $(UPPER_DIR)/$(APP_DIR)/%.cpp
 	$(SET_APP_DIR)
 	@${ECHO} ${current_dir}
 	@${ECHO} ${PURPLE}$<${NC}
-	@${ECHO} "build for cpp "$<
+	@${ECHO} "build for ps cpp "$<
+	@${ECHO} ${ARM_CXX}
 	mkdir -p $(TEMP_DIR)/$(COMPILE_APP_DIR)
-	@$(CXX) $(CPP_FLAGS)  -o $@  -c $<
-ifeq ($(__HIP_SET__), true)
-	@${ECHO} "Disable dependencies generation for HIP compiler"
-else
-	@$(CXX) $(CPP_FLAGS)  -MM -MF  $(patsubst %.o,%.d,$@) $<
-endif
+	@$(ARM_CXX) $(ARM_CPP_FLAGS)  -o $@ -c $<
 
 $(TEMP_DIR)/$(UPPER_DIR)/$(APP_DIR)/%.o: $(UPPER_DIR)/$(APP_DIR)/%.c
 	$(SET_APP_DIR)
 	@${ECHO}  ${PURPLE}$<${NC}
-	@${ECHO} "build for c "$<
+	@${ECHO} "build for ps c "$<
 	mkdir -p $(TEMP_DIR)/$(COMPILE_APP_DIR)
-	@$(CXX) $(CPP_FLAGS)  -o $@  -c $<
-ifeq ($(__HIP_SET__), true)
-	@${ECHO} "Disable dependencies generation for HIP compiler"
-else
-	@$(CXX) $(CPP_FLAGS)  -MM -MF  $(patsubst %.o,%.d,$@) $<
-endif
+	@$(ARM_CXX) $(ARM_CPP_FLAGS)  -o $@ -c $<
+
 
 unexport SRC_OBJS
 unexport APP_SRC
