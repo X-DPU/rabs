@@ -30,6 +30,18 @@ $(BUILD_DIR)/kernel.xsa: $(BINARY_CONTAINER_OBJS) $(AIE_CONTAINER_OBJS)
 
 
 
+
+.PHONY: package_from_xsa
+package_from_xsa:  $(BINARY_CONTAINER_OBJS) $(AIE_CONTAINER_OBJS)
+	@${ECHO} $(BINARY_CONTAINER_OBJS)
+
+	$(VPP) -p $(BUILD_DIR)/kernel.xsa $(AIE_CONTAINER_OBJS) --temp_dir $(TEMP_DIR)  -t $(TARGET) --platform $(DEVICE) -o $(BUILD_DIR)/kernel.xclbin  --package.out_dir $(PACKAGE_OUT)  --package.boot_mode=ospi
+
+.PHONY: xsa_bitstream
+xsa_bitstream: $(BUILD_DIR)/kernel.xsa
+
+
+
 ############################## Setting Rules for Binary Containers (Building Kernels) ##############################
 $(BUILD_DIR)/kernel.xclbin:  $(BINARY_CONTAINER_OBJS) $(AIE_CONTAINER_OBJS)
 	@${ECHO} $(BINARY_CONTAINER_OBJS)

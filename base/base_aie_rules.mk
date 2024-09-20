@@ -24,7 +24,7 @@ $(UPPER_DIR)/$(APP_DIR)/Work/ps/c_rts/aie_control_xrt.cpp:  ${AIE_CONTAINER_OBJS
 
 $(TEMP_DIR)/$(UPPER_DIR)/$(APP_DIR)/libadf.a: $(UPPER_DIR)/$(APP_DIR)/src/*.cpp
 	@${ECHO} $(dir $(patsubst %/,%, $(dir $<)))
-	make -C ./$(dir $(patsubst %/,%, $(dir $<))) -f ../../mk/base/base_aie_rules.mk  aie_compile AIE_FLAGS="${AIE_FLAGS}" AIE_PLATFORM="${AIE_PLATFORM}"
+	make -C ./$(dir $(patsubst %/,%, $(dir $<))) -f ../../mk/base/base_aie_rules.mk  aie_compile AIE_FLAGS="${AIE_FLAGS}" AIE_PLATFORM="${AIE_PLATFORM}" -j1
 	mkdir -p $(TEMP_DIR)/$(dir $(patsubst %/,%, $(dir $<)))
 	@cp  $(dir $(patsubst %/,%, $(dir $<)))/libadf.a  $@
 
