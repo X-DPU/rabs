@@ -65,6 +65,7 @@ aie_xclbin: $(BUILD_DIR)/aie_kernel.xclbin
 $(BUILD_DIR)/aie_kernel.xclbin : $(AIE_CONTAINER_OBJS)
 	$(VPP) -s -p -t $(TARGET) -f $(DEVICE) --package.out_dir ./	\
 	       --package.defer_aie_run --config mk/misc/aie_xrt.ini -o $@ $<
+	./mk/script/aie_xclbin_gen.sh $(BUILD_DIR)/aie_kernel.xclbin  $(BUILD_DIR)  $(BUILD_DIR)/aie_xrt_kernel.xclbin
 
 .PHONY: aie_xsa
 aie_xsa: $(BUILD_DIR)/kernel.xsa
