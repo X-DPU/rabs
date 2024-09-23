@@ -65,7 +65,7 @@ aie_xclbin: $(BUILD_DIR)/aie_kernel.xclbin
 $(BUILD_DIR)/aie_kernel.xclbin : $(AIE_CONTAINER_OBJS)
 	$(VPP) -s -p -t $(TARGET) -f $(DEVICE) --package.out_dir ./	\
 	       --package.defer_aie_run --config mk/misc/aie_xrt.ini -o $@ $<
-	#
+
 
 $(BUILD_DIR)/aie_xrt_kernel.xclbin : $(BUILD_DIR)/aie_kernel.xclbin
 	./mk/script/aie_xclbin_gen.sh $(BUILD_DIR)/aie_kernel.xclbin  $(BUILD_DIR)  $(BUILD_DIR)/aie_xrt_kernel.xclbin
@@ -93,3 +93,5 @@ aie_ps: $(AIE_PS_APP)
 
 .PHONY: aie_all
 aie_all: 	aie_xclbin aie_ps
+
+#	./mk/script/aie_xclbin_gen.sh $(BUILD_DIR)/aie_kernel.xclbin  $(BUILD_DIR)  $(BUILD_DIR)/aie_xrt_kernel.xclbin
