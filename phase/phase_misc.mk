@@ -16,7 +16,7 @@ help::
 
 
 .PHONY: info
-info: gen_subl_project
+info: gen_subl_project connect_info
 	mkdir -p $(BUILD_DIR)
 	mkdir -p $(BUILD_DIR)/log_path
 	mkdir -p $(BUILD_DIR)/git
