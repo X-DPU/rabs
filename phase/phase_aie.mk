@@ -22,6 +22,7 @@ $(BUILD_DIR)/aie_kernel.xclbin : $(AIE_CONTAINER_OBJS)
 .PHONY: $(BUILD_DIR)/${APP}_ps_ctrl.app
 $(BUILD_DIR)/${APP}_ps_ctrl.app:
 	@${ECHO} ${RED} "start compile arm program for aie control" ${NC}
+	@${RM} $(BUILD_DIR)/${APP}_ps_ctrl.app
 	$(ARM_CXX) $(ARM_CPP_FLAGS) ${AIE_PS_SRC} $(ARM_LDFLAGS) -o $@
 
 .PHONY: aie_ps_ctrl
