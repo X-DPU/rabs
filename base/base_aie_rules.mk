@@ -13,9 +13,13 @@ PROJECT_OBJS += $(UPPER_DIR)/$(APP_DIR)
 
 AIE_PS_APP += $(TEMP_DIR)/$(UPPER_DIR)/$(APP_DIR)/${APP}_ps.app
 
+AIE_PS_SRC += $(UPPER_DIR)/$(APP_DIR)/src/graph.cpp
+AIE_PS_SRC += $(UPPER_DIR)/$(APP_DIR)/Work/ps/c_rts/aie_control_xrt.cpp
+
 $(TEMP_DIR)/$(UPPER_DIR)/$(APP_DIR)/${APP}_ps.app: $(UPPER_DIR)/$(APP_DIR)/src/graph.cpp  $(UPPER_DIR)/$(APP_DIR)/Work/ps/c_rts/aie_control_xrt.cpp
 	@${ECHO} ${RED} "start compile arm program" ${NC}
 	$(ARM_CXX) $(ARM_CPP_FLAGS) $^ $(ARM_LDFLAGS) -o $@
+
 
 
 $(UPPER_DIR)/$(APP_DIR)/Work/ps/c_rts/aie_control_xrt.cpp:  ${AIE_CONTAINER_OBJS}
