@@ -4,14 +4,14 @@ set design_files [lindex $argv 2]
 set cflags_file  [lindex $argv 3]
 set output_file  [lindex $argv 4]
 set build_path   [lindex $argv 5]
+set app          [lindex $argv 6]
 
 
 set fileId [open "${cflags_file}" r]
 set cflags [read $fileId]
 close $fileId
 
-
-open_project proj_${hls_func} --reset
+open_project hls_proj_${app}_${hls_func} --reset
 set_top ${hls_func}
 add_files ${design_files} -cflags "${cflags}"
 

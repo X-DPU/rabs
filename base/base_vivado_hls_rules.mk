@@ -47,9 +47,9 @@ $(TEMP_DIR)/$(UPPER_DIR)/$(APP_DIR)/%.xo: $(UPPER_DIR)/$(APP_DIR)/%.cpp
 	@rm -rf project_$(KERNEL_NAME)
 
 	@[ -e ${LOCAL_CONFIG_FILE} ] && { \
-		faketime '2021-01-01 00:00:00' vitis_hls mk/script/run_vitis_hls.tcl $(KERNEL_NAME) ${__HLS_DEVICE__} '$(<)' "$(TEMP_DIR)/$(COMPILE_APP_DIR)/cflags" '$@' "$(TEMP_DIR)";\
+		faketime '2021-01-01 00:00:00' vitis_hls mk/script/run_vitis_hls.tcl $(KERNEL_NAME) ${__HLS_DEVICE__} '$(<)' "$(TEMP_DIR)/$(COMPILE_APP_DIR)/cflags" '$@' "$(TEMP_DIR)" $(APP);\
 	} || { \
-		faketime '2021-01-01 00:00:00' vitis_hls mk/script/run_vitis_hls.tcl $(KERNEL_NAME) ${__HLS_DEVICE__} '$(<)' "$(TEMP_DIR)/$(COMPILE_APP_DIR)/cflags" '$@' "$(TEMP_DIR)";\
+		faketime '2021-01-01 00:00:00' vitis_hls mk/script/run_vitis_hls.tcl $(KERNEL_NAME) ${__HLS_DEVICE__} '$(<)' "$(TEMP_DIR)/$(COMPILE_APP_DIR)/cflags" '$@' "$(TEMP_DIR)" $(APP);\
 	}
 	#tempary not support configure file, $(VPP) $(VPP_FLAGS) -c -k $(KERNEL_NAME) --temp_dir $(TEMP_DIR)/$(COMPILE_APP_DIR)  -I '$(<D)' -o'$@' '$<' ;\
 	#echo "$(COMPILE_APP_DIR)$(KERNEL_NAME)" > $(BUILD_DIR)/log_path/$(KERNEL_NAME)
