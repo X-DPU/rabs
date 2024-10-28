@@ -101,6 +101,12 @@ all:
 
 .PHONY: clean cleanall cleanfpga rebuild_host
 
+
+clean_${APP}:
+	-$(RMDIR) hls_proj_${APP}_*
+	-$(RMDIR) $(TEMP_DIR)
+	-$(RMDIR) $(BUILD_DIR)
+
 clean:
 	-$(RMDIR) $(EXECUTABLE) $(XCLBIN)/{*sw_emu*,*hw_emu*}
 	-${RMDIR} ${TEMP_DIR}
@@ -119,6 +125,7 @@ cleanall: clean
 	-$(RMDIR) *.sublime-workspace
 	-$(RMDIR) *.app
 	-$(RMDIR) *.protoinst
+	-$(RMDIR) hls_proj_*
 
 clean_fpga_obj: clean_fpga_bit
 	-$(RMDIR) $(GENERATED_KERNEL_OBJS)
