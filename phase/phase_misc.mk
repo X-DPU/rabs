@@ -63,6 +63,14 @@ connect_info: ${DEFAULT_CFG}
 project_log:
 	${EDITOR}  $(TEMP_DIR)/link/vivado/vpl/runme.log
 
+
+multi_stage_log:
+	${EDITOR} 	$(TEMP_DIR)/link/vivado/vpl/prj/prj.runs/impl_1/runme.log  	\
+				$(TEMP_DIR)/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/runme.log 	\
+	 			$(TEMP_DIR)/link/vivado/vpl/prj/prj.runs/impl_Performance_ExplorePostRoutePhysOpt/runme.log  	\
+	 			$(TEMP_DIR)/link/vivado/vpl/prj/prj.runs/impl_Performance_NetDelay_high/runme.log
+
+
 open_vivado_project:
 	vivado $(TEMP_DIR)/link/vivado/vpl/prj/prj.xpr
 
