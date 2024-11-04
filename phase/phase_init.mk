@@ -37,7 +37,7 @@ CPP_FLAGS :=
 CPP_LDFLAGS  :=
 CPP_FLAGS += -g -fsanitize=address
 
-ARM_CPP_FLAGS :=
+ARM_CPP_FLAGS := -D__ACC_ARM_BUILD__
 ARM_LDFLAGS :=
 
 VPP_LDFLAGS :=

@@ -10,5 +10,11 @@ $(APP).arm.app:  $(ARM_OBJS)
 arm:  info  $(APP).arm.app
 	@${ECHO} ${AIE_PS_APP}
 	$(MAKE) post_compile
-arm_clean:
+clean_arm_obj:
 	${RM} $(ARM_OBJS)
+
+
+rebuild_arm: info
+	$(MAKE) clean_arm_obj
+	$(MAKE) arm  -j
+	${ECHO} "build arm"
