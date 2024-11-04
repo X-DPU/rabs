@@ -31,14 +31,29 @@ $(BUILD_DIR)/kernel.xsa: $(BINARY_CONTAINER_OBJS) $(AIE_CONTAINER_OBJS)
 
 
 
+
 .PHONY: package_from_xsa
-package_from_xsa:  $(BINARY_CONTAINER_OBJS) $(AIE_CONTAINER_OBJS)
+package_from_xsa: $(BUILD_DIR)/opendpu_kernel.xclbin
+
+
+$(BUILD_DIR)/opendpu_kernel.xclbin:  $(BUILD_DIR)/kernel.xsa
 	@${ECHO} $(BINARY_CONTAINER_OBJS)
-	$(VPP) -p $(BUILD_DIR)/kernel.xsa $(AIE_CONTAINER_OBJS) --temp_dir $(TEMP_DIR)  -t $(TARGET) --platform $(DEVICE) -o $(BUILD_DIR)/kernel.xclbin  --package.out_dir $(PACKAGE_OUT)  --package.boot_mode=ospi
-	./mk/script/extract_xclbin.sh  $(BUILD_DIR)/kernel.xclbin  $(BUILD_DIR)
+	$(VPP) -p $(BUILD_DIR)/kernel.xsa $(AIE_CONTAINER_OBJS) --temp_dir $(TEMP_DIR)  -t $(TARGET) --platform $(DEVICE) -o $(BUILD_DIR)/opendpu_kernel.xclbin  --package.out_dir $(PACKAGE_OUT)  --package.boot_mode=ospi
+	./mk/script/extract_xclbin.sh  $(BUILD_DIR)/opendpu_kernel.xclbin  $(BUILD_DIR)
+
+$(BUILD_DIR)/ip_layout.json:  $(BUILD_DIR)/opendpu_kernel.xclbin
+	./mk/script/extract_xclbin.sh  $(BUILD_DIR)/opendpu_kernel.xclbin  $(BUILD_DIR)
+
+.PHONY: extract_base_address
+extract_base_address: $(APP_PATH)/$(APP)/opendpu_base_address.h
+
+$(APP_PATH)/$(APP)/opendpu_base_address.h: $(BUILD_DIR)/ip_layout.json
+	echo ${APP_PATH}/$(APP)
+	./mk/script/base_address.py $(BUILD_DIR)/ip_layout.json  $(BUILD_DIR)/opendpu_base_address.h
+	cp  $(BUILD_DIR)/opendpu_base_address.h $(APP_PATH)/$(APP)/opendpu_base_address.h
 
 .PHONY: xsa_bitstream
-xsa_bitstream: $(BUILD_DIR)/kernel.xsa
+xsa_bitstream: $(BUILD_DIR)/kernel.xsa $(APP_PATH)/$(APP)/opendpu_base_address.h
 
 
 
