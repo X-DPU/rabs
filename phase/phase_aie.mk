@@ -19,16 +19,16 @@ $(BUILD_DIR)/aie_kernel.xclbin : $(AIE_CONTAINER_OBJS)
 #	./mk/script/aie_xclbin_gen.sh $(BUILD_DIR)/aie_kernel.xclbin  $(BUILD_DIR)  $(BUILD_DIR)/aie_xrt_kernel.xclbin
 
 
-.PHONY: $(BUILD_DIR)/${APP}_ps_ctrl.app
-$(BUILD_DIR)/${APP}_ps_ctrl.app:
+.PHONY: $(BUILD_DIR)/${APP}_aie_ctrl.app
+$(BUILD_DIR)/${APP}_aie_ctrl.app:
 	@${ECHO} ${RED} "start compile arm program for aie control" ${NC}
-	@${RM} $(BUILD_DIR)/${APP}_ps_ctrl.app
+	@${RM} $(BUILD_DIR)/${APP}_aie_ctrl.app
 	$(ARM_CXX) $(ARM_CPP_FLAGS) ${AIE_PS_SRC} $(ARM_LDFLAGS) -o $@
 
-.PHONY: aie_ps_ctrl
-aie_ps_ctrl: $(BUILD_DIR)/${APP}_ps_ctrl.app
+.PHONY: aie_aie_ctrl
+aie_aie_ctrl: $(BUILD_DIR)/${APP}_aie_ctrl.app
 	@${ECHO} ${RED} "build aie ctrl application:" $(AIE_PS_APP) ${NC}
-	@${CP} $(BUILD_DIR)/${APP}_ps_ctrl.app  ${APP}_aie_ps_ctrl.app
+	@${CP} $(BUILD_DIR)/${APP}_aie_ctrl.app  ${APP}_aie_aie_ctrl.app
 
 
 
