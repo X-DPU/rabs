@@ -53,8 +53,7 @@ $(APP_PATH)/$(APP)/opendpu_base_address.h: $(BUILD_DIR)/ip_layout.json
 	cp  $(BUILD_DIR)/opendpu_base_address.h $(APP_PATH)/$(APP)/opendpu_base_address.h
 
 .PHONY: xsa_bitstream
-xsa_bitstream: $(BUILD_DIR)/kernel.xsa $(APP_PATH)/$(APP)/opendpu_base_address.h
-
+xsa_bitstream: $(BUILD_DIR)/kernel.xsa
 
 
 ############################## Setting Rules for Binary Containers (Building Kernels) ##############################
