@@ -11,7 +11,7 @@ AIE_CONTAINER_OBJS += $(TEMP_DIR)/$(UPPER_DIR)/$(APP_DIR)/libadf.a
 
 PROJECT_OBJS += $(UPPER_DIR)/$(APP_DIR)
 
-AIE_PS_APP += $(TEMP_DIR)/$(UPPER_DIR)/$(APP_DIR)/${APP}_ps.app
+AIE_PS_APP += $(TEMP_DIR)/$(UPPER_DIR)/$(APP_DIR)/${APP}.aie_ctrl.app
 
 AIE_PS_SRC += $(UPPER_DIR)/$(APP_DIR)/src/graph.cpp
 AIE_PS_SRC += $(UPPER_DIR)/$(APP_DIR)/Work/ps/c_rts/aie_control_xrt.cpp
