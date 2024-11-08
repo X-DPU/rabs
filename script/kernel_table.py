@@ -9,8 +9,8 @@ def generate_header(input_json, output_header):
 
     # Prepare the header file content
     header_content = """
-#ifndef __IP_TABLE_H__
-#define __IP_TABLE_H__
+#ifndef __KERNEL_TABLE_H__
+#define __KERNEL_TABLE_H__
 
 #include <stdint.h>
 #include <string.h>

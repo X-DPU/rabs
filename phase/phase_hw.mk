@@ -45,12 +45,20 @@ $(BUILD_DIR)/ip_layout.json:  $(BUILD_DIR)/opendpu_kernel.xclbin
 	./mk/script/extract_xclbin.sh  $(BUILD_DIR)/opendpu_kernel.xclbin  $(BUILD_DIR)
 
 .PHONY: extract_base_address
-extract_base_address: $(APP_PATH)/$(APP)/opendpu_base_address.h
+extract_base_address: $(APP_PATH)/$(APP)/opendpu_base_address.h  $(APP_PATH)/$(APP)/kernel_table.h
 
+
+.PHONY: $(APP_PATH)/$(APP)/opendpu_base_address.h
 $(APP_PATH)/$(APP)/opendpu_base_address.h: $(BUILD_DIR)/ip_layout.json
 	echo ${APP_PATH}/$(APP)
 	./mk/script/base_address.py $(BUILD_DIR)/ip_layout.json  $(BUILD_DIR)/opendpu_base_address.h
 	cp  $(BUILD_DIR)/opendpu_base_address.h $(APP_PATH)/$(APP)/opendpu_base_address.h
+
+
+.PHONY: $(APP_PATH)/$(APP)/kernel_table.h
+$(APP_PATH)/$(APP)/kernel_table.h: $(BUILD_DIR)/ip_layout.json
+	./mk/script/kernel_table.py $(BUILD_DIR)/ip_layout.json $(BUILD_DIR)/kernel_table.h
+	cp $(BUILD_DIR)/kernel_table.h $(APP_PATH)/$(APP)/kernel_table.h
 
 .PHONY: xsa_bitstream
 xsa_bitstream: $(BUILD_DIR)/kernel.xsa

@@ -52,5 +52,5 @@ aie_clean:
 
 
 aie_ps_clean:
-	@${RM} $(TEMP_DIR)/$(UPPER_DIR)/$(APP_DIR)/${APP}_ps.app
-	@${RM} ${APP}_ps.app
+	@${RM} $(TEMP_DIR)/$(UPPER_DIR)/$(APP_DIR)/${APP}.ps.app
+	@${RM} ${APP}.ps.app
