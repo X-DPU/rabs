@@ -13,6 +13,8 @@ GENERATED_KERNEL_OBJS += $(APP_BINARY_CONTAINERS)
 
 VPP_FLAGS +=  -I $(UPPER_DIR)/$(APP_DIR)
 CPP_FLAGS +=  -I $(UPPER_DIR)/$(APP_DIR)
+ARM_CPP_FLAGS +=  -I $(UPPER_DIR)/$(APP_DIR)
+
 
 PROJECT_OBJS += $(UPPER_DIR)/$(APP_DIR)
 
@@ -53,6 +55,9 @@ $(TEMP_DIR)/$(UPPER_DIR)/$(APP_DIR)/%.xo: $(UPPER_DIR)/$(APP_DIR)/%.cpp
 	}
 	#tempary not support configure file, $(VPP) $(VPP_FLAGS) -c -k $(KERNEL_NAME) --temp_dir $(TEMP_DIR)/$(COMPILE_APP_DIR)  -I '$(<D)' -o'$@' '$<' ;\
 	#echo "$(COMPILE_APP_DIR)$(KERNEL_NAME)" > $(BUILD_DIR)/log_path/$(KERNEL_NAME)
+
+	# driver file: hls_proj_platform_test_aie_s2mm/solution_aie_s2mm/impl/misc/drivers/aie_s2mm_v1_0/src
+	@${CP}  hls_proj_${APP}_${KERNEL_NAME}/solution_${KERNEL_NAME}/impl/misc/drivers/${KERNEL_NAME}_*/src/x${KERNEL_NAME}_hw.h  $(APP_DIR)
 
 %.log: $(UPPER_DIR)/$(APP_DIR)/%.cpp
 	$(SET_KERNEL_NAME)
