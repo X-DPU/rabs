@@ -15,6 +15,9 @@ HOST_OBJS:=$(addprefix $(BASE_PATH_TMP)/,$(OBJS))
 
 include ../../mk/base/fast_build_common.mk
 
+CPPFLAGS += $(CPP_FLAGS)
+LIBS += $(CPP_LDFLAGS)
+
 all:  $(BASE_PATH)/$(NAME)
 
 prepare:
@@ -22,6 +25,8 @@ prepare:
 	@rm -rf $(BASE_PATH)
 	@mkdir -p $(BASE_PATH)
 	@mkdir -p $(BASE_PATH_TMP)
+	@echo "CXX:"
+	@echo $(ECHO_HEADER)$(CXX)
 	@echo "CFLAGS:"
 	@echo $(ECHO_HEADER)$(CFLAGS)
 	@echo "CPPFLAGS:"

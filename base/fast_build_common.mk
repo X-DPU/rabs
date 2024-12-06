@@ -1,5 +1,5 @@
-CC = gcc
-CXX = g++
+CC ?= gcc
+CXX ?= g++
 
 COMPILE_CONFIG_PATH :=../../mk
 
