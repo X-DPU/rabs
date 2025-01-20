@@ -153,8 +153,8 @@ run_hw_emu:
 	$(MAKE) clean_host_obj
 	$(MAKE) $(EXECUTABLE) TARGET=hw_emu  -j
 	${ECHO} args: $(RUN_ARGS)
-	kill $(shell pidof xsim) | true
-	kill $(shell pidof xsimk) | true
+	kill $(shell pgrep xsim) | true
+	kill $(shell pgrep xsimk) | true
 	XCL_EMULATION_MODE=hw_emu  ./$(EXECUTABLE) $(EMU_ARGS)
 
 
