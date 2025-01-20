@@ -43,6 +43,7 @@ info: gen_subl_project connect_info
 	git diff --cached > ${BUILD_DIR}/git/code_cached.diff | true
 	git log --graph  -10 > ${BUILD_DIR}/git/git_log.log | true
 	git show HEAD > ${BUILD_DIR}/git/git_show.diff | true
+	@echo "Using $(NUM_CORES) cores"
 
 
 .PHONY: emconfig connect_info post_compile

@@ -5,7 +5,7 @@ ifneq ($(TARGET), hw)
 	VPP_FLAGS += -g
 endif
 
-VPP_FLAGS += -I ./src/ --vivado.param general.maxThreads=32 --vivado.synth.jobs 32
+VPP_FLAGS += -I ./src/ --vivado.param general.maxThreads=${NUM_CORES} --vivado.synth.jobs ${NUM_CORES}
 VPP_FLAGS += --remote_ip_cache  ./.rabs_ipcache
 
 # Kernel linker flags
@@ -16,7 +16,7 @@ else
 	VPP_LDFLAGS += --kernel_frequency $(FREQ)
 endif
 
-VPP_LDFLAGS += --vivado.param general.maxThreads=32  --vivado.impl.jobs 32 --config ${DEFAULT_CFG}
+VPP_LDFLAGS += --vivado.param general.maxThreads=${NUM_CORES}  --vivado.impl.jobs ${NUM_CORES} --config ${DEFAULT_CFG}
 
 
 

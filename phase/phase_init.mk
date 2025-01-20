@@ -66,6 +66,13 @@ HOST_ARCH := x86
 SYSROOT :=
 
 
+NUM_CORES := $(shell nproc)
+
+ifeq ($(shell [ $(NUM_CORES) -gt 32 ] && echo true || echo false), true)
+  NUM_CORES := 32
+endif
+
+
 
 AIE_PLATFORM := /opt/xilinx/platforms/xilinx_vck5000_gen4x8_qdma_2_202220_1/xilinx_vck5000_gen4x8_qdma_2_202220_1.xpfm
 
