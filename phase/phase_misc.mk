@@ -168,9 +168,10 @@ run_hw_emu_backtrace:
 	kill $(shell pidof xsimk) | true
 	XCL_EMULATION_MODE=hw_emu  catchsegv ./$(EXECUTABLE) $(EMU_ARGS)
 
-rebuild_hw_emu:
+rerun_hw_emu:
 	$(MAKE) clean_fpga_obj -j
 	$(MAKE) TARGET=hw_emu all  -j
+	$(MAKE) TARGET=hw_emu run_hw_emu  -j
 
 
 .PHONY: automation
