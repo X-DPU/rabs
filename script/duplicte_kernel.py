@@ -62,6 +62,7 @@ for line in fin:
                 if (test_sp != line):
                     for i in range(num_of_cu):
                         replace_ddr =  line.replace('DDR[0]', 'DDR[' + str(i) + ']')
+                        replace_ddr =  line.replace('HBM[0]', 'HBM[' + str(i) + ']')
                         new_ddr = replace_ddr.replace('_1.', '_' + str(i + 1) + '.')
                         fout.write(new_ddr);
                 else :
