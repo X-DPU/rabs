@@ -160,32 +160,13 @@ run_hw_emu:
 
 
 
-run_hw_emu_backtrace:
-	$(MAKE) clean_host_obj
-	$(MAKE) $(EXECUTABLE) TARGET=hw_emu  -j
-	${ECHO} args: $(RUN_ARGS)
-	kill $(shell pidof xsim) | true
-	kill $(shell pidof xsimk) | true
-	XCL_EMULATION_MODE=hw_emu  ./$(EXECUTABLE) $(EMU_ARGS)
-
-
 
 run_hw_emu_backtrace:
 	$(MAKE) clean_host_obj
 	$(MAKE) $(EXECUTABLE) TARGET=hw_emu  -j
 	${ECHO} args: $(RUN_ARGS)
-	kill $(shell pidof xsim) | true
-	kill $(shell pidof xsimk) | true
-	XCL_EMULATION_MODE=hw_emu  ./$(EXECUTABLE) $(EMU_ARGS)
-
-
-
-run_hw_emu_backtrace:
-	$(MAKE) clean_host_obj
-	$(MAKE) $(EXECUTABLE) TARGET=hw_emu  -j
-	${ECHO} args: $(RUN_ARGS)
-	kill $(shell pidof xsim) | true
-	kill $(shell pidof xsimk) | true
+	kill $(shell pgrep xsim) | true
+	kill $(shell pgrep xsimk) | true
 	XCL_EMULATION_MODE=hw_emu  catchsegv ./$(EXECUTABLE) $(EMU_ARGS)
 
 rerun_hw_emu:
