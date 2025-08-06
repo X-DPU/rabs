@@ -63,6 +63,7 @@ $(TEMP_DIR)/arm/$(UPPER_DIR)/$(APP_DIR)/%.o: $(UPPER_DIR)/$(APP_DIR)/%.cpp
 	@${ECHO} "build for ps cpp "$<
 	@${ECHO} ${ARM_CXX}
 	mkdir -p $(TEMP_DIR)/arm/$(COMPILE_APP_DIR)
+	@${ECHO} $(ARM_CPP_FLAGS)
 	@$(ARM_CXX) $(ARM_CPP_FLAGS)  -o $@ -c $<
 
 $(TEMP_DIR)/arm/$(UPPER_DIR)/$(APP_DIR)/%.o: $(UPPER_DIR)/$(APP_DIR)/%.c

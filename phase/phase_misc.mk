@@ -37,6 +37,8 @@ info: gen_subl_project connect_info
 	@echo  -e  ${RED}$(VPP_LDFLAGS)${NC}
 	@echo  "global cpp flags:"
 	@echo  -e  ${RED}$(CPP_FLAGS)${NC}
+	@echo  "global arm cpp flags:"
+	@echo  -e  ${RED}$(ARM_CPP_FLAGS)${NC}
 	@echo  "#####################################################################"
 	git status > ${BUILD_DIR}/git/git_status.log | true
 	git diff > ${BUILD_DIR}/git/code_diff.diff | true

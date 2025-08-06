@@ -76,7 +76,7 @@ endif
 
 AIE_PLATFORM := /opt/xilinx/platforms/xilinx_vck5000_gen4x8_qdma_2_202220_1/xilinx_vck5000_gen4x8_qdma_2_202220_1.xpfm
 
-
+PROJECT_PATH :=.
 
 
 
