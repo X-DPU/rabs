@@ -55,9 +55,9 @@ $(TEMP_DIR)/$(UPPER_DIR)/$(APP_DIR)/%.xo: $(UPPER_DIR)/$(APP_DIR)/%.cpp
 	}
 	#tempary not support configure file, $(VPP) $(VPP_FLAGS) -c -k $(KERNEL_NAME) --temp_dir $(TEMP_DIR)/$(COMPILE_APP_DIR)  -I '$(<D)' -o'$@' '$<' ;\
 	#echo "$(COMPILE_APP_DIR)$(KERNEL_NAME)" > $(BUILD_DIR)/log_path/$(KERNEL_NAME)
-
-	# driver file: hls_proj_platform_test_aie_s2mm/solution_aie_s2mm/impl/misc/drivers/aie_s2mm_v1_0/src
-	@${CP}  hls_proj_${APP}_${KERNEL_NAME}/solution_${KERNEL_NAME}/impl/misc/drivers/${KERNEL_NAME}_*/src/x${KERNEL_NAME}_hw.h  $(APP_DIR)
+	# driver reg-map header: keep a copy at the top of THIS kernel's hls_proj (each
+	# hls proj gets its own x<kernel>_hw.h) instead of dumping a bare file in app/.
+	@${CP}  hls_proj_${APP}_${KERNEL_NAME}/solution_${KERNEL_NAME}/impl/misc/drivers/${KERNEL_NAME}_*/src/x${KERNEL_NAME}_hw.h  hls_proj_${APP}_${KERNEL_NAME}/
 
 %.log: $(UPPER_DIR)/$(APP_DIR)/%.cpp
 	$(SET_KERNEL_NAME)
