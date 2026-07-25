@@ -8,7 +8,7 @@ $(APP).arm.app:  $(ARM_OBJS)
 
 
 arm:  info  $(APP).arm.app
-	@${ECHO} ${AIE_PS_APP}
+	@${ECHO} $(APP).arm.app
 	$(MAKE) post_compile
 clean_arm_obj:
 	${RM} $(ARM_OBJS)
