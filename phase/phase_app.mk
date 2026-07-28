@@ -36,6 +36,7 @@ PACKAGE_OUT = $(TEMP_DIR)/package_$(APP).$(TARGET)
 # compile time path for opendpu_base_address.h
 ARM_CPP_FLAGS += -I$(APP_PATH)/$(APP)
 
+
 include ${APP_PATH}/$(APP)/kernel.mk
 
 

@@ -57,7 +57,10 @@ $(TEMP_DIR)/$(UPPER_DIR)/$(APP_DIR)/%.xo: $(UPPER_DIR)/$(APP_DIR)/%.cpp
 	#echo "$(COMPILE_APP_DIR)$(KERNEL_NAME)" > $(BUILD_DIR)/log_path/$(KERNEL_NAME)
 	# driver reg-map header: keep a copy at the top of THIS kernel's hls_proj (each
 	# hls proj gets its own x<kernel>_hw.h) instead of dumping a bare file in app/.
-	@${CP}  hls_proj_${APP}_${KERNEL_NAME}/solution_${KERNEL_NAME}/impl/misc/drivers/${KERNEL_NAME}_*/src/x${KERNEL_NAME}_hw.h  hls_proj_${APP}_${KERNEL_NAME}/
+	# Free-running kernels (ap_ctrl_none, stream-only) have no s_axilite and so no
+	# driver header at all -- not a build failure.
+	@${CP}  hls_proj_${APP}_${KERNEL_NAME}/solution_${KERNEL_NAME}/impl/misc/drivers/${KERNEL_NAME}_*/src/x${KERNEL_NAME}_hw.h  hls_proj_${APP}_${KERNEL_NAME}/ 2>/dev/null || \
+		${ECHO} "no s_axilite driver header for ${KERNEL_NAME} (free-running kernel)"
 
 %.log: $(UPPER_DIR)/$(APP_DIR)/%.cpp
 	$(SET_KERNEL_NAME)
