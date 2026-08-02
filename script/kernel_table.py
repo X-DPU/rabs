@@ -2,6 +2,23 @@
 import json
 import argparse
 
+def parse_base_address(raw):
+    """Return an int, or None when the IP has no addressable control port.
+
+    Free-running kernels (ap_ctrl_none, no s_axilite) have no AXI4-Lite port, and
+    ip_layout.json reports m_base_address as 'not_used' for them. The old code did
+    base_address[2:] assuming a '0x' prefix, which turned 'NOT_USED' into 'T_USED'
+    and emitted the non-literal 0xT_USED.
+    """
+    if raw is None:
+        return None
+    text = str(raw).strip()
+    try:
+        return int(text, 16) if text.lower().startswith("0x") else int(text, 10)
+    except ValueError:
+        return None
+
+
 def generate_header(input_json, output_header):
     # Load the JSON data from the input file
     with open(input_json, 'r') as file:
@@ -26,11 +43,21 @@ typedef struct {
 static ip_entry_t ip_entries[] = {
 """
 
-    # Generate entries for each IP in JSON
+    # Generate entries for each IP in JSON. IPs with no addressable control port
+    # are left out of the table on purpose: a free-running kernel must never be
+    # started from software, so an accidental lookup should fail loudly in
+    # find_ip_entry_by_name() rather than hand back a bogus address.
+    not_addressable = []
     for entry in json_data["ip_layout"]["m_ip_data"]:
         name = entry["m_name"]
-        base_address = entry["m_base_address"].upper()
-        header_content += f'    {{"{name}", 0x{base_address[2:]}}},\n'
+        address = parse_base_address(entry.get("m_base_address"))
+        if address is None:
+            not_addressable.append((name, entry.get("m_base_address")))
+            continue
+        header_content += f'    {{"{name}", 0x{address:X}}},\n'
+
+    for name, raw in not_addressable:
+        header_content += f'    // omitted, no addressable control port: {name} (m_base_address={raw})\n'
 
     header_content += """
 };

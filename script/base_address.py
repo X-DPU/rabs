@@ -2,6 +2,23 @@
 import json
 import argparse
 
+def parse_base_address(raw):
+    """Return an int, or None when the IP has no addressable control port.
+
+    Free-running kernels (ap_ctrl_none, no s_axilite) have no AXI4-Lite port, and
+    ip_layout.json reports m_base_address as 'not_used' for them. The old code did
+    base_address[2:] assuming a '0x' prefix, which turned 'NOT_USED' into 'T_USED'
+    and emitted the non-literal 0xT_USED.
+    """
+    if raw is None:
+        return None
+    text = str(raw).strip()
+    try:
+        return int(text, 16) if text.lower().startswith("0x") else int(text, 10)
+    except ValueError:
+        return None
+
+
 def generate_header(input_json, output_file):
     # Load the JSON data from the input file
     with open(input_json, 'r') as file:
@@ -13,8 +30,12 @@ def generate_header(input_json, output_file):
     for entry in json_data["ip_layout"]["m_ip_data"]:
         # Process m_name to create a C-style constant name
         name = entry["m_name"].split(":")[1].upper().replace(":", "_").replace(".", "_")
-        base_address = entry["m_base_address"].upper()
-        header_content += f"#define {name}_BASE_ADDR    {base_address}\n"
+        address = parse_base_address(entry.get("m_base_address"))
+        if address is None:
+            # free-running kernel: no AXI4-Lite port, so there is no address to define
+            header_content += f"// {name}_BASE_ADDR omitted: m_base_address={entry.get('m_base_address')}\n"
+            continue
+        header_content += f"#define {name}_BASE_ADDR    0x{address:X}\n"
 
     header_content += "\n#endif // IP_LAYOUT_H\n"
 
