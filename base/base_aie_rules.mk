@@ -18,7 +18,7 @@ AIE_PS_SRC += $(UPPER_DIR)/$(APP_DIR)/Work/ps/c_rts/aie_control_xrt.cpp
 
 $(TEMP_DIR)/$(UPPER_DIR)/$(APP_DIR)/${APP}.ps.app: ${AIE_PS_SRC}
 	@${ECHO} ${RED} "start compile arm program" ${NC}
-	$(ARM_CXX) $(ARM_CPP_FLAGS) $^ $(ARM_LDFLAGS) -o $@
+	$(ARM_CXX) $(ARM_CPP_FLAGS) $(AIE_PS_CPP_FLAGS) $^ $(ARM_LDFLAGS) $(AIE_PS_LDFLAGS) -o $@
 
 
 

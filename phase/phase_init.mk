@@ -53,6 +53,13 @@ ARM_OBJS :=
 
 AIE_PS_APP:=
 AIE_PS_SRC:=
+
+# Extra flags applied ONLY to the aie_ctrl / ps app link, on top of
+# ARM_CPP_FLAGS.  Kept separate so an AIE app can ask for optimisation or
+# threading without changing how the rest of the ARM code is built.
+AIE_PS_CPP_FLAGS :=
+AIE_PS_LDFLAGS :=
+
 KERNEL_OBJS :=
 GENERATED_KERNEL_OBJS :=
 
