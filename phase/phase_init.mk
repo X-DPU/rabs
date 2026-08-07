@@ -12,6 +12,25 @@ MK_PATH := $(abspath $(lastword $(MAKEFILE_LIST)))
 COMMON_REPO ?= $(shell bash -c 'export MK_PATH=$(MK_PATH); echo  $${MK_PATH%fpga/*}')
 PWD = $(shell readlink -f .)
 
+############################## Last-built app ##############################
+# rabs records the app it last built here so a bare `make` -- in this tree or
+# from the manifest wrapper -- targets that app instead of silently falling back
+# to the built-in default and reporting on something nobody asked for.
+#
+# Deliberately relative: every entry point runs with the app dir as cwd (either
+# `make` in app/ or `make -C .../app` from the manifest), and MAKEFILE_LIST is
+# unreliable here because color.mk is included just above.
+#
+# Written in phase_app.mk once the app name is resolved -- see there for why it
+# is only written when the user names an app explicitly.
+RABS_LAST_APP     := .last_app
+RABS_RECORDED_APP := $(strip $(shell cat $(RABS_LAST_APP) 2>/dev/null))
+# Guarded: a bare `app ?=` with an empty value would still DEFINE app, which
+# would then suppress the caller's own `app ?= <default>` fallback.
+ifneq ($(RABS_RECORDED_APP),)
+app ?= $(RABS_RECORDED_APP)
+endif
+
 __PL_SET__    := false
 __AIE_SET__   := false
 __HOST_SET__  := false

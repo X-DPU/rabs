@@ -8,6 +8,20 @@ FULL_APP_PATH := $(shell ./mk/script/find_app.py --input  ${app_name})
 APP= $(notdir ${FULL_APP_PATH})
 APP_PATH= $(dir ${FULL_APP_PATH})
 
+# Record the app just resolved (see RABS_LAST_APP in phase_init.mk).
+#
+# Only when the user named one on the command line: writing unconditionally
+# would let a bare `make` overwrite the record with the fallback default, which
+# is exactly what the record exists to prevent. Skipped when unchanged so a
+# rebuild does not rewrite the file on every invocation.
+ifeq ($(origin app),command line)
+ifneq ($(APP),)
+ifneq ($(APP),$(RABS_RECORDED_APP))
+$(shell echo '$(APP)' > $(RABS_LAST_APP))
+endif
+endif
+endif
+
 
 .PHONY: app_test
 app_test:
