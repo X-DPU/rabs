@@ -54,3 +54,18 @@ aie_clean:
 aie_ps_clean:
 	@${RM} $(TEMP_DIR)/$(UPPER_DIR)/$(APP_DIR)/${APP}.ps.app
 	@${RM} ${APP}.ps.app
+# make aie_viz app=<app> [AIE_VIZ_WORK=<Work dir name>]
+#   Opens the AIE compile summary of the app's graph in Vitis Analyzer: the graph view (kernels + streams) and the
+#   array view (tile placement, stream-switch routing, PLIO shim columns). Needs an X display (ssh -X / VNC); without
+#   one it lists the static reports (graph.png / graph.pdf / graph_mapped_post.png) to open elsewhere.
+#   AIE_VIZ_WORK picks another compile in the same directory, e.g. AIE_VIZ_WORK=Work_bitstream.
+AIE_VIZ_WORK ?= Work
+AIE_VIZ_DIRS = $(patsubst $(TEMP_DIR)/%/libadf.a,%,$(AIE_CONTAINER_OBJS))
+.PHONY: aie_viz
+aie_viz:
+	@for d in $(AIE_VIZ_DIRS); do \
+	  s=$$d/$(AIE_VIZ_WORK)/graph.aiecompile_summary; \
+	  if [ ! -f $$s ]; then echo "no $$s: compile the graph first (make aie_obj app=$(APP))"; continue; fi; \
+	  if [ -n "$$DISPLAY" ]; then echo "vitis_analyzer $$s"; vitis_analyzer $$s; \
+	  else echo "no DISPLAY: static reports of $$d/$(AIE_VIZ_WORK):"; ls -1 $$d/$(AIE_VIZ_WORK)/reports/*.png $$d/$(AIE_VIZ_WORK)/reports/*.pdf 2>/dev/null; fi; \
+	done
