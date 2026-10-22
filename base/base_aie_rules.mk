@@ -53,7 +53,9 @@ libadf.a: src/*
 	@echo "INFO:Running aiecompiler for hw..."
 	@rm -rf Work libadf.a
 	@mkdir -p Work
-	@aiecompiler --target=hw --include="." --platform=${AIE_PLATFORM} --include="src" ${AIE_FLAGS} --workdir=./Work src/graph.cpp
+	@# aiecompiler keeps a file open per tile (guidance JSONs): with a 1024 open-file soft limit (tmux) aieir_be
+	@# segfaults on a large graph after the core compiles. Raise the soft limit to the hard one for this run.
+	@ulimit -n $$(ulimit -Hn) 2>/dev/null; aiecompiler --target=hw --include="." --platform=${AIE_PLATFORM} --include="src" ${AIE_FLAGS} --workdir=./Work src/graph.cpp
 
 aie_compile_x86:
 	@echo "INFO:- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
