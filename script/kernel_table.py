@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
 import json
 import argparse
+import os
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from hwh_map import register_segments
 
 def parse_base_address(raw):
     """Return an int, or None when the IP has no addressable control port.
@@ -19,7 +24,7 @@ def parse_base_address(raw):
         return None
 
 
-def generate_header(input_json, output_header):
+def generate_header(input_json, output_header, xsa=None, master="M_AXI_FPD"):
     # Load the JSON data from the input file
     with open(input_json, 'r') as file:
         json_data = json.load(file)
@@ -47,6 +52,11 @@ static ip_entry_t ip_entries[] = {
     # are left out of the table on purpose: a free-running kernel must never be
     # started from software, so an accidental lookup should fail loudly in
     # find_ip_entry_by_name() rather than hand back a bogus address.
+    # The ARM runs this table through /dev/mem, so the address must be the ARM's
+    # (M_AXI_FPD) view. ip_layout.json carries whichever view v++ chose -- the host's
+    # since the PCIe host can also reach the control interconnect -- so when the linked
+    # design's hand-off is available the address is taken from there (hwh_map.py).
+    arm_view = register_segments(xsa, master) if xsa else None
     not_addressable = []
     for entry in json_data["ip_layout"]["m_ip_data"]:
         name = entry["m_name"]
@@ -54,6 +64,12 @@ static ip_entry_t ip_entries[] = {
         if address is None:
             not_addressable.append((name, entry.get("m_base_address")))
             continue
+        if arm_view is not None:
+            inst = name.split(":")[-1]
+            if inst not in arm_view:
+                not_addressable.append((name, f"no {master} address in the hand-off (host view 0x{address:X})"))
+                continue
+            address = arm_view[inst][0]
         header_content += f'    {{"{name}", 0x{address:X}}},\n'
 
     for name, raw in not_addressable:
@@ -89,8 +105,10 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Generate a C header file from a JSON IP layout.")
     parser.add_argument("input_json", help="Path to the input JSON file containing the IP layout.")
     parser.add_argument("output_header", help="Path to the output C header file.")
+    parser.add_argument("--xsa", help="linked design (kernel.xsa or .hwh): take the ARM-view addresses from it")
+    parser.add_argument("--master", default="M_AXI_FPD", help="master whose view to use (default M_AXI_FPD = the ARM)")
 
     args = parser.parse_args()
 
     # Generate the header file using the provided arguments
-    generate_header(args.input_json, args.output_header)
+    generate_header(args.input_json, args.output_header, args.xsa, args.master)
